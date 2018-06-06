@@ -174,7 +174,7 @@ model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['categ
 
 print(model.summary())
 #checkpointer = ModelCheckpoint(filepath=data_path + '/model-{epoch:02d}.hdf5', verbose=1)
-num_epochs = 50
+num_epochs = 15
 if run_opt == 1:
     model.fit_generator(train_data_generator.generate(), len(train_data)//(batch_size*num_steps), num_epochs,
                         validation_data=valid_data_generator.generate(),
