@@ -151,12 +151,12 @@ valid_data_generator = KerasBatchGenerator(valid_data, num_steps, batch_size, vo
 
 
 hidden_size = 650
-#use_dropout=True
+use_dropout=False
 model = Sequential()
 model.add(Embedding(vocabulary, hidden_size, input_length=num_steps))
 model.add(CuDNNLSTM(hidden_size, return_sequences=True))
 #model.add(LSTM(hidden_size, return_sequences=True))
-#if use_dropout:
+if use_dropout:
     #model.add(Dropout(0.5))
 model.add(TimeDistributed(Dense(vocabulary)))
 model.add(Activation('softmax'))
