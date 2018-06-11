@@ -154,11 +154,11 @@ hidden_size = 650
 use_dropout=True
 model = Sequential()
 model.add(Embedding(vocabulary, hidden_size, input_length=num_steps))
-if use_dropout:
-    model.add(Dropout(0.5))
+#if use_dropout:
+    #model.add(Dropout(0.5))
 model.add(CuDNNLSTM(hidden_size, return_sequences=True))
-if use_dropout:
-    model.add(Dropout(0.5))
+#if use_dropout:
+    #model.add(Dropout(0.5))
 model.add(CuDNNLSTM(hidden_size, return_sequences=True))
 if use_dropout:
     model.add(Dropout(0.5))
