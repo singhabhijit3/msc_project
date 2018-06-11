@@ -10,3 +10,9 @@ From here it uses early stopping:
 
 zaremba_results_4: num_steps=35, batch_size=20, hidden_size=650, 2 LSTM, 3 dropout layers (0.5), ADAM, (E17-4.954)
 
+zaremba_results_5: num_steps=35, batch_size=20, hidden_size=650, 2 LSTM, 2 dropout layers (0.5), ADAM, (E11-4.899)
+
+zaremba_results_6: num_steps=35, batch_size=20, hidden_size=650, 2 LSTM, 1 dropout layer (0.5), ADAM, (E8-4.968)
+
+
+
