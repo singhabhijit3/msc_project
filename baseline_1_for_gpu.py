@@ -174,11 +174,12 @@ model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['categ
 
 print(model.summary())
 #checkpointer = ModelCheckpoint(filepath=data_path + '/model-{epoch:02d}.hdf5', verbose=1)
-num_epochs = 15
+earlystopping = EarlyStopping(monitor='val_loss', patience=5, verbose=1)
+num_epochs = 50
 if run_opt == 1:
     model.fit_generator(train_data_generator.generate(), len(train_data)//(batch_size*num_steps), num_epochs,
                         validation_data=valid_data_generator.generate(),
-                        validation_steps=len(valid_data)//(batch_size*num_steps))#, callbacks=[checkpointer])
+                        validation_steps=len(valid_data)//(batch_size*num_steps), callbacks=[earlystopping])#, callbacks=[checkpointer])
     # model.fit_generator(train_data_generator.generate(), 2000, num_epochs,
     #                     validation_data=valid_data_generator.generate(),
     #                     validation_steps=10)
