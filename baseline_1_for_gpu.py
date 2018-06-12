@@ -14,7 +14,7 @@ from keras.layers import CuDNNLSTM
 from keras.optimizers import RMSprop, Adam, SGD
 from keras import backend as K
 from keras.utils import to_categorical
-from keras.callbacks import ModelCheckpoint
+from keras.callbacks import ModelCheckpoint, EarlyStopping
 import numpy as np
 import argparse
 import pdb
