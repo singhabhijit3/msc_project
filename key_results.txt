@@ -14,5 +14,9 @@ zaremba_results_5: num_steps=35, batch_size=20, hidden_size=650, 2 LSTM, 2 dropo
 
 zaremba_results_6: num_steps=35, batch_size=20, hidden_size=650, 2 LSTM, 1 dropout layer (0.5), ADAM, (E8-4.968)
 
+baseline_1_results_3: num_steps=35, batch_size=20, hidden_size=650, 1 LSTM, no dropout, ADAM(lr=0.01), (Ex-x.xxx)
+zaremba_results_7: num_steps=35, batch_size=20, hidden_size=650, 2 LSTM, 2 dropout layers (0.5), ADAM(lr=0.01), (Ex-x.xxx)
+
+
 
 
