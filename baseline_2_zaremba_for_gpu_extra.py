@@ -1,4 +1,3 @@
-
 # coding: utf-8
 
 # In[1]:
@@ -157,8 +156,8 @@ model.add(Embedding(vocabulary, hidden_size, input_length=num_steps))
 #if use_dropout:
     #model.add(Dropout(0.5))
 model.add(CuDNNLSTM(hidden_size, return_sequences=True))
-#if use_dropout:
-    #model.add(Dropout(0.5))
+if use_dropout:
+    model.add(Dropout(0.5))
 model.add(CuDNNLSTM(hidden_size, return_sequences=True))
 if use_dropout:
     model.add(Dropout(0.5))
@@ -169,7 +168,7 @@ model.add(Activation('softmax'))
 # In[12]:
 
 
-optimizer = Adam()
+optimizer = Adam(lr=1.0)
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['categorical_accuracy'])
 
 
@@ -226,4 +225,3 @@ elif run_opt == 2:
         pred_print_out += reversed_dictionary[predict_word] + " "
     print(true_print_out)
     print(pred_print_out)
-
