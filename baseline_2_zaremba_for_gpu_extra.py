@@ -168,7 +168,7 @@ model.add(Activation('softmax'))
 # In[12]:
 
 
-optimizer = Adam(lr=10000)
+optimizer = Adam(lr=1000000)
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['categorical_accuracy'])
 
 
