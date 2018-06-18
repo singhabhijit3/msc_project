@@ -23,6 +23,10 @@ zaremba_results_8: num_steps=35, batch_size=20, hidden_size=650, 2 LSTM, 2 dropo
 baseline_1_results_5: num_steps=35, batch_size=20, hidden_size=650, 1 LSTM, no dropout, ADAM(lr=1.0), (E5-4.930)
 zaremba_results_9: num_steps=35, batch_size=20, hidden_size=650, 2 LSTM, 2 dropout layers (0.5), ADAM(lr=1.0), (E13-4.955)
 
+baseline_1_results_6: num_steps=35, batch_size=20, hidden_size=650, 1 LSTM, no dropout, ADAM(lr=10), (E5-4.968)
+zaremba_results_10: num_steps=35, batch_size=20, hidden_size=650, 2 LSTM, 2 dropout layers (0.5), ADAM(lr=1.0), (E13-4.962)
 
+baseline_1_results_7: num_steps=35, batch_size=20, hidden_size=650, 1 LSTM, no dropout, ADAM(lr=1.0), (E5-4.978)
+zaremba_results_11: num_steps=35, batch_size=20, hidden_size=650, 2 LSTM, 2 dropout layers (0.5), ADAM(lr=1.0), (E10-4.977)
 
 
