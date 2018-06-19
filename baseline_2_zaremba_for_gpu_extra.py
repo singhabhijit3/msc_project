@@ -168,8 +168,8 @@ model.add(Activation('softmax'))
 # In[12]:
 
 
-optimizer = Adam(lr=0)
-model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['categorical_accuracy'])
+optimizer = SGD(lr=0)
+model.compile(loss='categorical_crossentropy', optimizer='sgd', metrics=['categorical_accuracy'])
 
 
 # In[13]:
