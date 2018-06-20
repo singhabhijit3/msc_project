@@ -18,9 +18,13 @@ zaremba_results_6: num_steps=35, batch_size=20, hidden_size=650, 2 LSTM, 1 dropo
 
 Learning Rates:
 
+baseline_1_lr_01: extremely bad
+baseline_1_lr_1: extremely bad
 baseline_1_lr_10: extremely bad
 baseline_1_lr_100: extremely bad
 
+zaremba_lr_01: extremely bad
+zaremba_lr_1: extremely bad
 zaremba_lr_10: extremely bad
 zaremba_lr_100: extremely bad
 
