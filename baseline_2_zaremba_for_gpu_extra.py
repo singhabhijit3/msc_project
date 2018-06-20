@@ -168,7 +168,7 @@ model.add(Activation('softmax'))
 # In[12]:
 
 
-optimizer = SGD(lr=0)
+sgd = optimizers.SGD(lr=0)
 model.compile(loss='categorical_crossentropy', optimizer='sgd', metrics=['categorical_accuracy'])
 
 
