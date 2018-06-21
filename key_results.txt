@@ -59,10 +59,14 @@ baseline_1_lrs_rms: E4-5.171
 baseline_1_lrs_adam: E5-4.926 (patience=3, factor=0.5)
 baseline_1_lrs_adam2: E5-4.962 (patience=2, factor=0.5)
 baseline_1_lrs_adam3: E5-4.943 (patience=2, factor=0.1)
+baseline_1_lrs_adam4: E5-4.937 (patience=1, factor=0.1)
+baseline_1_lrs_adam5: E9-5.289 (patience=1, factor=0.1, lr=0.01)
 
 zaremba_lrs_rms: E11-5.133
 zaremba_lrs_adam: E18-4.951 (patience=3, factor=0.5)
 zaremba_lrs_adam2: E28-4.914 (patience=2, factor=0.5)
 zaremba_lrs_adam3: E30-4.860 (patience=2, factor=0.1)
+zaremba_lrs_adam4: E21-4.872 (patience=1, factor=0.1)
+zaremba_lrs_adam5: E21-5.264 (patience=1, factor=0.1, lr=0.01)
 
 
