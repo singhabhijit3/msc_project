@@ -179,8 +179,8 @@ model.compile(loss='categorical_crossentropy', optimizer=optim, metrics=['catego
 print(model.summary())
 #checkpointer = ModelCheckpoint(filepath=data_path + '/model-{epoch:02d}.hdf5', verbose=1)
 earlystopping = EarlyStopping(monitor='val_loss', patience=5, verbose=1)
-reduce_lr = ReduceLROnPlateau(factor=0.5, patience=2, verbose=1)
-num_epochs = 30
+reduce_lr = ReduceLROnPlateau(factor=0.1, patience=1, verbose=1)
+num_epochs = 40
 if run_opt == 1:
     model.fit_generator(train_data_generator.generate(), len(train_data)//(batch_size*num_steps), num_epochs,
                         validation_data=valid_data_generator.generate(),
