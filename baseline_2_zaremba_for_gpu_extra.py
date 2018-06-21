@@ -1,3 +1,4 @@
+
 # coding: utf-8
 
 # In[1]:
@@ -139,7 +140,7 @@ class KerasBatchGenerator(object):
 
 
 num_steps = 35
-batch_size = 20
+batch_size = 100
 train_data_generator = KerasBatchGenerator(train_data, num_steps, batch_size, vocabulary,
                                            skip_step=num_steps)
 valid_data_generator = KerasBatchGenerator(valid_data, num_steps, batch_size, vocabulary,
@@ -168,8 +169,9 @@ model.add(Activation('softmax'))
 # In[12]:
 
 
-optim = Adam(lr=0.01)
+optim = Adam()
 model.compile(loss='categorical_crossentropy', optimizer=optim, metrics=['categorical_accuracy'])
+
 
 # In[13]:
 
@@ -225,3 +227,4 @@ elif run_opt == 2:
         pred_print_out += reversed_dictionary[predict_word] + " "
     print(true_print_out)
     print(pred_print_out)
+
