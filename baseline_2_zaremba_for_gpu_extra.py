@@ -153,8 +153,8 @@ hidden_size = 650
 use_dropout=True
 model = Sequential()
 model.add(Embedding(vocabulary, hidden_size, input_length=num_steps))
-#if use_dropout:
-    #model.add(Dropout(0.5))
+if use_dropout:
+    model.add(Dropout(0.5))
 model.add(CuDNNLSTM(hidden_size, return_sequences=True))
 if use_dropout:
     model.add(Dropout(0.5))
@@ -168,7 +168,7 @@ model.add(Activation('softmax'))
 # In[12]:
 
 
-optim = RMSprop()
+optim = Adam()
 model.compile(loss='categorical_crossentropy', optimizer=optim, metrics=['categorical_accuracy'])
 
 # In[13]:
@@ -177,7 +177,7 @@ model.compile(loss='categorical_crossentropy', optimizer=optim, metrics=['catego
 print(model.summary())
 #checkpointer = ModelCheckpoint(filepath=data_path + '/model-{epoch:02d}.hdf5', verbose=1)
 earlystopping = EarlyStopping(monitor='val_loss', patience=5, verbose=1)
-reduce_lr = ReduceLROnPlateau(factor=0.5, patience=3, verbose=1)
+reduce_lr = ReduceLROnPlateau(factor=0.1, patience=2, verbose=1)
 num_epochs = 30
 if run_opt == 1:
     model.fit_generator(train_data_generator.generate(), len(train_data)//(batch_size*num_steps), num_epochs,
