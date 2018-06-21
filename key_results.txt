@@ -71,8 +71,12 @@ zaremba_lrs_adam3: E30-4.860 (patience=2, factor=0.1)
 zaremba_lrs_adam4: E21-4.872 (patience=1, factor=0.1)
 zaremba_lrs_adam5: E21-5.264 (patience=1, factor=0.1, lr=0.01)
 
-Batch Size:
+Batch Size: (patience=1, factor=0.1, lr=0.001)
 
+baseline_1_bs50: E14-6.221
+baseline_1_bs100: E9-6.534
 
+zaremba_bs50: E12-5.885
+zaremba_bs100: E12-5.819
 
 
