@@ -53,4 +53,12 @@ zaremba_results_12: num_steps=35, batch_size=20, hidden_size=650, 2 LSTM, 2 drop
 baseline_1_results_9: num_steps=35, batch_size=20, hidden_size=650, 1 LSTM, no dropout, ADAM, (E5-4.950)
 zaremba_results_13: num_steps=35, batch_size=20, hidden_size=650, 2 LSTM, 2 dropout layers (0.5), ADAM, (E9-5.020)
 
+Learning Rate Schedules:
+
+baseline_1_lrs_rms: E4-5.171
+baseline_1_lrs_adam: E5-4.926
+
+zaremba_lrs_rms: E11-5.133
+zaremba_lrs_adam: E18-4.951
+
 
