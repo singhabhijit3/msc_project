@@ -95,7 +95,9 @@ zaremba_cl25: E32-4.873
 zaremba_cl45: E13-6.462
 zaremba_cl45: E13-6.528
 
-Number of layers: (Only for Zaremba. Till now we had 2 LSTM layers)
+Number of layers: (Only for Zaremba. Till now we had 2 LSTM layers. Batch Size=20, Context Length=35, 0.5 Dropout between each layer)
 
-
+zaremba_l3: E11-5.002
+zaremba_l4: E29-4.947
+zaremba_l5: E35-5.043
 
