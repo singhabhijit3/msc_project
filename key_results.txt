@@ -85,4 +85,8 @@ zaremba_bs100: E12-5.819
 
 Context Length: (Till now it was 35. Rest is same as above. Batch Size is kept at 20 for quicker training, though best seems to be 5 or 10)
 
+baseline_1_cl15: E3-4.955
+baseline_1_cl25: E16-4.948
 
+zaremba_cl15: 
+zaremba_cl25: E32-4.873
