@@ -87,6 +87,15 @@ Context Length: (Till now it was 35. Rest is same as above. Batch Size is kept a
 
 baseline_1_cl15: E3-4.955
 baseline_1_cl25: E16-4.948
+baseline_1_cl45: E4-6.539
+baseline_1_cl55: E10-6.439
 
-zaremba_cl15: 
+zaremba_cl15: E27-4.828
 zaremba_cl25: E32-4.873
+zaremba_cl45: E13-6.462
+zaremba_cl45: E13-6.528
+
+Number of layers: (Only for Zaremba. Till now we had 2 LSTM layers)
+
+
+
