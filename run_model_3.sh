@@ -3,7 +3,7 @@
 #SBATCH -n 1	  # tasks requested
 #SBATCH --gres=gpu:1
 #SBATCH --mem=16000  # memory in Mb
-#SBATCH -o baseline_1_cl55  # send stdout to baseline_1_cl55
+#SBATCH -o zaremba_l3  # send stdout to zaremba_l3
 #SBATCH -e experiment_errfile_3  # send stderr to experiment_errfile_3
 #SBATCH -t 04:00:00  # time requested in hour:minute:secon
 export CUDA_HOME=/opt/cuda-8.0.44
@@ -30,4 +30,4 @@ export TMP=/disk/scratch/${STUDENT_ID}/
 
 source /home/${STUDENT_ID}/miniconda3/bin/activate mlp
 
-python baseline_1_for_gpu_extra.py
+python baseline_2_zaremba_for_gpu_extra.py
