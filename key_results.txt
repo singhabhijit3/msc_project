@@ -73,10 +73,16 @@ zaremba_lrs_adam5: E21-5.264 (patience=1, factor=0.1, lr=0.01)
 
 Batch Size: (patience=1, factor=0.1, lr=0.001)
 
+baseline_1_bs05: E3-4.921
+baseline_1_bs10: E3-4.915
 baseline_1_bs50: E14-6.221
 baseline_1_bs100: E9-6.534
 
+zaremba_bs05: E40-4.728 (still kept decreasing with every epoch)
+zaremba_bs10: E27-4.818
 zaremba_bs50: E12-5.885
 zaremba_bs100: E12-5.819
+
+Context Length: (Till now it was 35. Rest is same as above. Batch Size is kept at 20 for quicker training, though best seems to be 5 or 10)
 
 
