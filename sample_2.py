@@ -139,8 +139,8 @@ class KerasBatchGenerator(object):
 # In[10]:
 
 
-num_steps = 35
-batch_size = 20
+num_steps = 15
+batch_size = 5
 train_data_generator = KerasBatchGenerator(train_data, num_steps, batch_size, vocabulary,
                                            skip_step=num_steps)
 valid_data_generator = KerasBatchGenerator(valid_data, num_steps, batch_size, vocabulary,
@@ -154,15 +154,6 @@ hidden_size = 650
 use_dropout=True
 model = Sequential()
 model.add(Embedding(vocabulary, hidden_size, input_length=num_steps))
-if use_dropout:
-    model.add(Dropout(0.5))
-model.add(CuDNNLSTM(hidden_size, return_sequences=True))
-if use_dropout:
-    model.add(Dropout(0.5))
-model.add(CuDNNLSTM(hidden_size, return_sequences=True))
-if use_dropout:
-    model.add(Dropout(0.5))
-model.add(CuDNNLSTM(hidden_size, return_sequences=True))
 if use_dropout:
     model.add(Dropout(0.5))
 model.add(CuDNNLSTM(hidden_size, return_sequences=True))
@@ -189,7 +180,7 @@ print(model.summary())
 #checkpointer = ModelCheckpoint(filepath=data_path + '/model-{epoch:02d}.hdf5', verbose=1)
 earlystopping = EarlyStopping(monitor='val_loss', patience=5, verbose=1)
 reduce_lr = ReduceLROnPlateau(factor=0.1, patience=1, verbose=1)
-num_epochs = 40
+num_epochs = 50
 if run_opt == 1:
     model.fit_generator(train_data_generator.generate(), len(train_data)//(batch_size*num_steps), num_epochs,
                         validation_data=valid_data_generator.generate(),
@@ -236,4 +227,3 @@ elif run_opt == 2:
         pred_print_out += reversed_dictionary[predict_word] + " "
     print(true_print_out)
     print(pred_print_out)
-
