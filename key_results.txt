@@ -83,6 +83,8 @@ zaremba_bs10: E27-4.818
 zaremba_bs50: E12-5.885
 zaremba_bs100: E12-5.819
 
+zaremba_alt_best: E28-4.757 (same specs as zaremba_bs05)
+
 Context Length: (Till now it was 35. Rest is same as above. Batch Size is kept at 20 for quicker training, though best seems to be 5 or 10)
 
 baseline_1_cl15: E3-4.955
@@ -105,4 +107,5 @@ Using best hyperparameters found till now: (context length=15, batch size=5, Def
 
 zaremba_best1: E28-4.789
 zaremba_best2: E28-4.815
+zaremba_best3: E38-4.786
 
