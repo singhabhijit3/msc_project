@@ -140,7 +140,7 @@ class KerasBatchGenerator(object):
 
 
 num_steps = 35
-batch_size = 5
+batch_size = 20
 train_data_generator = KerasBatchGenerator(train_data, num_steps, batch_size, vocabulary,
                                            skip_step=num_steps)
 valid_data_generator = KerasBatchGenerator(valid_data, num_steps, batch_size, vocabulary,
@@ -150,18 +150,18 @@ valid_data_generator = KerasBatchGenerator(valid_data, num_steps, batch_size, vo
 # In[11]:
 
 
-hidden_size = 650
+hidden_size = 1500
 use_dropout=True
 model = Sequential()
 model.add(Embedding(vocabulary, hidden_size, input_length=num_steps))
 if use_dropout:
-    model.add(Dropout(0.5))
+    model.add(Dropout(0.65))
 model.add(CuDNNLSTM(hidden_size, return_sequences=True))
 if use_dropout:
-    model.add(Dropout(0.5))
+    model.add(Dropout(0.65))
 model.add(CuDNNLSTM(hidden_size, return_sequences=True))
 if use_dropout:
-    model.add(Dropout(0.5))
+    model.add(Dropout(0.65))
 model.add(TimeDistributed(Dense(vocabulary)))
 model.add(Activation('softmax'))
 
@@ -178,7 +178,7 @@ model.compile(loss='categorical_crossentropy', optimizer=optim, metrics=['catego
 
 print(model.summary())
 #checkpointer = ModelCheckpoint(filepath=data_path + '/model-{epoch:02d}.hdf5', verbose=1)
-earlystopping = EarlyStopping(monitor='val_loss', patience=5, verbose=1)
+earlystopping = EarlyStopping(monitor='val_loss', patience=10, verbose=1)
 reduce_lr = ReduceLROnPlateau(factor=0.1, patience=1, verbose=1)
 num_epochs = 50
 if run_opt == 1:
