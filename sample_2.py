@@ -44,16 +44,16 @@ if args.data_path:
 
 run_opt = 1
 
-num_steps = random.sample(range(10, 50), 20)
-batch_size = random.sample(range(5, 50), 20)
+num_steps = random.sample(range(10, 50), 10)
+batch_size = random.sample(range(5, 50), 10)
 
-hidden_size = random.sample(range(5, 25), 20)
-drop_prob = random.sample(range(10, 100), 20)
+hidden_size = random.sample(range(5, 20), 10)
+drop_prob = random.sample(range(20, 70), 10)
 
 hidden_size = [i * 100 for i in hidden_size]
 drop_prob = [i / 100 for i in drop_prob]
 
-combos = [1,2,3,4,5]
+combos = [1,2,3,4,5,6,7,8,9,10]
 
 
 
