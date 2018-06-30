@@ -5,7 +5,7 @@
 #SBATCH --mem=16000  # memory in Mb
 #SBATCH -o zaremba_large  # send stdout to zaremba_large
 #SBATCH -e experiment_errfile_5  # send stderr to experiment_errfile_5
-#SBATCH -t 04:00:00  # time requested in hour:minute:secon
+#SBATCH -t 08:00:00  # time requested in hour:minute:secon
 export CUDA_HOME=/opt/cuda-8.0.44
 
 export CUDNN_HOME=/opt/cuDNN-6.0_8.0
