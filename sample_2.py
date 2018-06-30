@@ -19,6 +19,8 @@ import numpy as np
 import argparse
 import pdb
 
+import random
+
 
 # In[2]:
 
@@ -41,6 +43,18 @@ if args.data_path:
 
 
 run_opt = 1
+
+num_steps = random.sample(range(10, 50), 20)
+batch_size = random.sample(range(10, 100), 20)
+
+hidden_size = random.sample(range(5, 20), 20)
+drop_prob = random.sample(range(10, 100), 20)
+
+hidden_size = [i * 100 for i in hidden_size]
+drop_prob = [i / 100 for i in drop_prob]
+
+combos = [1,2,3,4,5]
+
 
 
 # In[5]:
@@ -105,125 +119,136 @@ train_data, valid_data, test_data, vocabulary, reversed_dictionary = load_data()
 # In[9]:
 
 
-class KerasBatchGenerator(object):
+for ijk in combos:
+    
+    print("model %d" % ijk)
+    print("num_steps=%d" % num_steps[ijk-1])
+    print("batch_size=%d" % batch_size[ijk-1])
+    print("hidden_size=%d" % hidden_size[ijk-1])
+    print("drop_prob=%f" % drop_prob[ijk-1])
 
-    def __init__(self, data, num_steps, batch_size, vocabulary, skip_step=5):
-        self.data = data
-        self.num_steps = num_steps
-        self.batch_size = batch_size
-        self.vocabulary = vocabulary
+
+    class KerasBatchGenerator(object):
+
+        def __init__(self, data, num_steps, batch_size, vocabulary, skip_step=5):
+            self.data = data
+            self.num_steps = num_steps
+            self.batch_size = batch_size
+            self.vocabulary = vocabulary
         # this will track the progress of the batches sequentially through the
         # data set - once the data reaches the end of the data set it will reset
         # back to zero
-        self.current_idx = 0
+            self.current_idx = 0
         # skip_step is the number of words which will be skipped before the next
         # batch is skimmed from the data set
-        self.skip_step = skip_step
+            self.skip_step = skip_step
 
-    def generate(self):
-        x = np.zeros((self.batch_size, self.num_steps))
-        y = np.zeros((self.batch_size, self.num_steps, self.vocabulary))
-        while True:
-            for i in range(self.batch_size):
-                if self.current_idx + self.num_steps >= len(self.data):
+        def generate(self):
+            x = np.zeros((self.batch_size, self.num_steps))
+            y = np.zeros((self.batch_size, self.num_steps, self.vocabulary))
+            while True:
+                for i in range(self.batch_size):
+                    if self.current_idx + self.num_steps >= len(self.data):
                     # reset the index back to the start of the data set
-                    self.current_idx = 0
-                x[i, :] = self.data[self.current_idx:self.current_idx + self.num_steps]
-                temp_y = self.data[self.current_idx + 1:self.current_idx + self.num_steps + 1]
+                        self.current_idx = 0
+                    x[i, :] = self.data[self.current_idx:self.current_idx + self.num_steps]
+                    temp_y = self.data[self.current_idx + 1:self.current_idx + self.num_steps + 1]
                 # convert all of temp_y into a one hot representation
-                y[i, :, :] = to_categorical(temp_y, num_classes=self.vocabulary)
-                self.current_idx += self.skip_step
-            yield x, y
+                    y[i, :, :] = to_categorical(temp_y, num_classes=self.vocabulary)
+                    self.current_idx += self.skip_step
+                yield x, y
 
 
 # In[10]:
 
 
-num_steps = 15
-batch_size = 5
-train_data_generator = KerasBatchGenerator(train_data, num_steps, batch_size, vocabulary,
-                                           skip_step=num_steps)
-valid_data_generator = KerasBatchGenerator(valid_data, num_steps, batch_size, vocabulary,
-                                           skip_step=num_steps)
+
+
+    train_data_generator = KerasBatchGenerator(train_data, num_steps[ijk-1], batch_size[ijk-1], vocabulary,
+                                           skip_step=num_steps[ijk-1])
+    valid_data_generator = KerasBatchGenerator(valid_data, num_steps[ijk-1], batch_size[ijk-1], vocabulary,
+                                           skip_step=num_steps[ijk-1])
 
 
 # In[11]:
 
-
-hidden_size = 650
-use_dropout=True
-model = Sequential()
-model.add(Embedding(vocabulary, hidden_size, input_length=num_steps))
-if use_dropout:
-    model.add(Dropout(0.5))
-model.add(CuDNNLSTM(hidden_size, return_sequences=True))
-if use_dropout:
-    model.add(Dropout(0.5))
-model.add(CuDNNLSTM(hidden_size, return_sequences=True))
-if use_dropout:
-    model.add(Dropout(0.5))
-model.add(TimeDistributed(Dense(vocabulary)))
-model.add(Activation('softmax'))
+    hidden = hidden_size[ijk-1]
+    drop = drop_prob[ijk-1]
+    
+    use_dropout=True
+    model = Sequential()
+    model.add(Embedding(vocabulary, hidden_size[ijk-1], input_length=num_steps[ijk-1]))
+    if use_dropout:
+        model.add(Dropout(drop))
+    model.add(CuDNNLSTM(hidden, return_sequences=True))
+    if use_dropout:
+        model.add(Dropout(drop))
+    model.add(CuDNNLSTM(hidden, return_sequences=True))
+    if use_dropout:
+        model.add(Dropout(drop))
+    model.add(TimeDistributed(Dense(vocabulary)))
+    model.add(Activation('softmax'))
 
 
 # In[12]:
 
 
-optim = Adam()
-model.compile(loss='categorical_crossentropy', optimizer=optim, metrics=['categorical_accuracy'])
+    optim = Adam()
+    model.compile(loss='categorical_crossentropy', optimizer=optim, metrics=['categorical_accuracy'])
 
 
 # In[13]:
 
 
-print(model.summary())
+    #print(model.summary())
 #checkpointer = ModelCheckpoint(filepath=data_path + '/model-{epoch:02d}.hdf5', verbose=1)
-earlystopping = EarlyStopping(monitor='val_loss', patience=5, verbose=1)
-reduce_lr = ReduceLROnPlateau(factor=0.1, patience=1, verbose=1)
-num_epochs = 50
-if run_opt == 1:
-    model.fit_generator(train_data_generator.generate(), len(train_data)//(batch_size*num_steps), num_epochs,
+#earlystopping = EarlyStopping(monitor='val_loss', patience=10, verbose=1)
+#reduce_lr = ReduceLROnPlateau(factor=0.1, patience=1, verbose=1)
+    num_epochs = 1
+    if run_opt == 1:
+        model.fit_generator(train_data_generator.generate(), len(train_data)//(batch_size[ijk-1]*num_steps[ijk-1]), num_epochs,
                         validation_data=valid_data_generator.generate(),
-                        validation_steps=len(valid_data)//(batch_size*num_steps), callbacks=[earlystopping, reduce_lr])#, callbacks=[checkpointer])
+                        validation_steps=len(valid_data)//(batch_size[ijk-1]*num_steps[ijk-1]))#, callbacks=[earlystopping, reduce_lr])#, callbacks=[checkpointer])
     # model.fit_generator(train_data_generator.generate(), 2000, num_epochs,
     #                     validation_data=valid_data_generator.generate(),
     #                     validation_steps=10)
     #model.save(data_path + "final_model.hdf5")
-elif run_opt == 2:
+    elif run_opt == 2:
     #model = load_model(data_path + "\model-40.hdf5")
-    model = load_model(data_path + "final_model.hdf5")
-    dummy_iters = 40
-    example_training_generator = KerasBatchGenerator(train_data, num_steps, 1, vocabulary,
+        model = load_model(data_path + "final_model.hdf5")
+        dummy_iters = 40
+        example_training_generator = KerasBatchGenerator(train_data, num_steps[ijk-1], 1, vocabulary,
                                                      skip_step=1)
-    print("Training data:")
-    for i in range(dummy_iters):
-        dummy = next(example_training_generator.generate())
-    num_predict = 10
-    true_print_out = "Actual words: "
-    pred_print_out = "Predicted words: "
-    for i in range(num_predict):
-        data = next(example_training_generator.generate())
-        prediction = model.predict(data[0])
-        predict_word = np.argmax(prediction[:, num_steps-1, :])
-        true_print_out += reversed_dictionary[train_data[num_steps + dummy_iters + i]] + " "
-        pred_print_out += reversed_dictionary[predict_word] + " "
-    print(true_print_out)
-    print(pred_print_out)
+        print("Training data:")
+        for i in range(dummy_iters):
+            dummy = next(example_training_generator.generate())
+        num_predict = 10
+        true_print_out = "Actual words: "
+        pred_print_out = "Predicted words: "
+        for i in range(num_predict):
+            data = next(example_training_generator.generate())
+            prediction = model.predict(data[0])
+            predict_word = np.argmax(prediction[:, num_steps[ijk-1]-1, :])
+            true_print_out += reversed_dictionary[train_data[num_steps[ijk-1] + dummy_iters + i]] + " "
+            pred_print_out += reversed_dictionary[predict_word] + " "
+        print(true_print_out)
+        print(pred_print_out)
     # test data set
-    dummy_iters = 40
-    example_test_generator = KerasBatchGenerator(test_data, num_steps, 1, vocabulary,
+        dummy_iters = 40
+        example_test_generator = KerasBatchGenerator(test_data, num_steps[ijk-1], 1, vocabulary,
                                                      skip_step=1)
-    print("Test data:")
-    for i in range(dummy_iters):
-        dummy = next(example_test_generator.generate())
-    num_predict = 10
-    true_print_out = "Actual words: "
-    pred_print_out = "Predicted words: "
-    for i in range(num_predict):
-        data = next(example_test_generator.generate())
-        prediction = model.predict(data[0])
-        predict_word = np.argmax(prediction[:, num_steps - 1, :])
-        true_print_out += reversed_dictionary[test_data[num_steps + dummy_iters + i]] + " "
-        pred_print_out += reversed_dictionary[predict_word] + " "
-    print(true_print_out)
-    print(pred_print_out)
+        print("Test data:")
+        for i in range(dummy_iters):
+            dummy = next(example_test_generator.generate())
+        num_predict = 10
+        true_print_out = "Actual words: "
+        pred_print_out = "Predicted words: "
+        for i in range(num_predict):
+            data = next(example_test_generator.generate())
+            prediction = model.predict(data[0])
+            predict_word = np.argmax(prediction[:, num_steps[ijk-1] - 1, :])
+            true_print_out += reversed_dictionary[test_data[num_steps[ijk-1] + dummy_iters + i]] + " "
+            pred_print_out += reversed_dictionary[predict_word] + " "
+        print(true_print_out)
+        print(pred_print_out)
+
