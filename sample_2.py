@@ -47,7 +47,7 @@ run_opt = 1
 num_steps = random.sample(range(10, 50), 20)
 batch_size = random.sample(range(10, 100), 20)
 
-hidden_size = random.sample(range(5, 20), 20)
+hidden_size = random.sample(range(5, 25), 20)
 drop_prob = random.sample(range(10, 100), 20)
 
 hidden_size = [i * 100 for i in hidden_size]
