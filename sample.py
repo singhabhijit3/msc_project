@@ -139,8 +139,8 @@ class KerasBatchGenerator(object):
 # In[10]:
 
 
-num_steps = 31
-batch_size = 17
+num_steps = 28
+batch_size = 21
 train_data_generator = KerasBatchGenerator(train_data, num_steps, batch_size, vocabulary,
                                            skip_step=num_steps)
 valid_data_generator = KerasBatchGenerator(valid_data, num_steps, batch_size, vocabulary,
@@ -155,13 +155,13 @@ use_dropout=True
 model = Sequential()
 model.add(Embedding(vocabulary, hidden_size, input_length=num_steps))
 if use_dropout:
-    model.add(Dropout(0.36))
+    model.add(Dropout(0.35))
 model.add(CuDNNLSTM(hidden_size, return_sequences=True))
 if use_dropout:
-    model.add(Dropout(0.36))
+    model.add(Dropout(0.35))
 model.add(CuDNNLSTM(hidden_size, return_sequences=True))
 if use_dropout:
-    model.add(Dropout(0.36))
+    model.add(Dropout(0.35))
 model.add(TimeDistributed(Dense(vocabulary)))
 model.add(Activation('softmax'))
 
