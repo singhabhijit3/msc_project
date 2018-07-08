@@ -139,8 +139,8 @@ class KerasBatchGenerator(object):
 # In[10]:
 
 
-num_steps = 28
-batch_size = 21
+num_steps = 50
+batch_size = 15
 train_data_generator = KerasBatchGenerator(train_data, num_steps, batch_size, vocabulary,
                                            skip_step=num_steps)
 valid_data_generator = KerasBatchGenerator(valid_data, num_steps, batch_size, vocabulary,
@@ -150,7 +150,7 @@ valid_data_generator = KerasBatchGenerator(valid_data, num_steps, batch_size, vo
 # In[11]:
 
 
-hidden_size = 1800
+hidden_size = 1000
 use_dropout=True
 model = Sequential()
 model.add(Embedding(vocabulary, hidden_size, input_length=num_steps))
