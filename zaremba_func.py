@@ -152,8 +152,8 @@ valid_data_generator = KerasBatchGenerator(valid_data, num_steps, batch_size, vo
 hidden_size = 650
 use_dropout=True
 
-input = Input(shape=(num_steps,), dtype='int32')
-embed = Embedding(vocabulary, hidden_size, input_length=num_steps)
+inp = Input(shape=(num_steps,), dtype='int32')
+embed = Embedding(vocabulary, hidden_size, input_length=num_steps)(inp)
 if use_dropout:
     d1 = Dropout(0.5)(embed)
 l1 = CuDNNLSTM(hidden_size, return_sequences=True)(d1)
@@ -164,7 +164,7 @@ if use_dropout:
     d3 = Dropout(0.32)(l2)
 output = TimeDistributed(Dense(vocabulary, activation='softmax'))(d3)
 
-lstm_model = Model(inputs=input, outputs=output)
+lstm_model = Model(inputs=inp, outputs=output)
 
 
 
