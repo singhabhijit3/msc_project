@@ -109,3 +109,5 @@ zaremba_best1: E28-4.789
 zaremba_best2: E28-4.815
 zaremba_best3: E38-4.786
 
+zaremba_very_large: E40-4.729 (still kept decreasing with every epoch) (num_steps=35, bs=5, hs=1500, do=0.6)
+
