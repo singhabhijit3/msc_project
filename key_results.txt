@@ -84,6 +84,7 @@ zaremba_bs50: E12-5.885
 zaremba_bs100: E12-5.819
 
 zaremba_alt_best: E28-4.757 (same specs as zaremba_bs05)
+zaremba_alt_best2: E34-4.742
 
 Context Length: (Till now it was 35. Rest is same as above. Batch Size is kept at 20 for quicker training, though best seems to be 5 or 10)
 
