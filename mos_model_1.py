@@ -168,7 +168,7 @@ latent = TimeDistributed(Dense(n_experts*hidden_size, input_shape=(hidden_size,)
 latent_reshape = Reshape((-1,hidden_size))(latent)
 logit = TimeDistributed(Dense(vocabulary,input_shape=(hidden_size,)))(latent_reshape)
 
-prior_logit = Dense(n_experts, input_shape=(hidden_size,), use_bias=False)(d3)
+prior_logit = TimeDistributed(Dense(n_experts, input_shape=(hidden_size,), use_bias=False))(d3)
 prior_logit = Reshape((-1,n_experts))(prior_logit)
 prior = TimeDistributed(Dense(n_experts, activation='softmax'))(prior_logit)
 
