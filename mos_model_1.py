@@ -192,7 +192,7 @@ lstm_model = Model(inputs=inp, outputs=model_output)
 # In[12]:
 
 
-optim = Adam()
+optim = SGD()
 lstm_model.compile(loss='categorical_crossentropy', optimizer=optim, metrics=['categorical_accuracy'])
 
 
@@ -202,7 +202,7 @@ lstm_model.compile(loss='categorical_crossentropy', optimizer=optim, metrics=['c
 print(lstm_model.summary())
 #checkpointer = ModelCheckpoint(filepath=data_path + '/model-{epoch:02d}.hdf5', verbose=1)
 earlystopping = EarlyStopping(monitor='val_loss', patience=5, verbose=1)
-reduce_lr = ReduceLROnPlateau(factor=0.1, patience=1, verbose=1)
+reduce_lr = ReduceLROnPlateau(factor=0.1, patience=3, verbose=1)
 num_epochs = 50
 if run_opt == 1:
     lstm_model.fit_generator(train_data_generator.generate(), len(train_data)//(batch_size*num_steps), num_epochs,
