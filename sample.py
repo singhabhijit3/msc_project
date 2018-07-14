@@ -1,4 +1,3 @@
-
 # coding: utf-8
 
 # In[1]:
@@ -8,8 +7,8 @@ from __future__ import print_function
 import collections
 import os
 import tensorflow as tf
-from keras.models import Sequential, load_model
-from keras.layers import Dense, Activation, Embedding, Flatten, Dropout, TimeDistributed, Reshape, Lambda
+from keras.models import Sequential, load_model, Model
+from keras.layers import Input, Dense, Activation, Embedding, Flatten, Dropout, TimeDistributed, Reshape, Lambda
 from keras.layers import CuDNNLSTM
 from keras.optimizers import RMSprop, Adam, SGD
 from keras import backend as K
@@ -139,8 +138,8 @@ class KerasBatchGenerator(object):
 # In[10]:
 
 
-num_steps = 50
-batch_size = 15
+num_steps = 35
+batch_size = 5
 train_data_generator = KerasBatchGenerator(train_data, num_steps, batch_size, vocabulary,
                                            skip_step=num_steps)
 valid_data_generator = KerasBatchGenerator(valid_data, num_steps, batch_size, vocabulary,
@@ -150,39 +149,45 @@ valid_data_generator = KerasBatchGenerator(valid_data, num_steps, batch_size, vo
 # In[11]:
 
 
-hidden_size = 1000
+hidden_size = 650
 use_dropout=True
-model = Sequential()
-model.add(Embedding(vocabulary, hidden_size, input_length=num_steps))
+
+inp = Input(shape=(num_steps,), dtype='int32')
+embed = Embedding(vocabulary, hidden_size, input_length=num_steps)(inp)
 if use_dropout:
-    model.add(Dropout(0.35))
-model.add(CuDNNLSTM(hidden_size, return_sequences=True))
+    d1 = Dropout(0.5)(embed)
+l1 = CuDNNLSTM(hidden_size, return_sequences=True)(d1)
 if use_dropout:
-    model.add(Dropout(0.35))
-model.add(CuDNNLSTM(hidden_size, return_sequences=True))
+    d2 = Dropout(0.5)(l1)
+l2 = CuDNNLSTM(hidden_size, return_sequences=True)(d2)
 if use_dropout:
-    model.add(Dropout(0.35))
-model.add(TimeDistributed(Dense(vocabulary)))
-model.add(Activation('softmax'))
+    d3 = Dropout(0.5)(l2)
+l3 = CuDNNLSTM(hidden_size, return_sequences=True)(d3)
+if use_dropout:
+    d4 = Dropout(0.5)(l3)
+output = TimeDistributed(Dense(vocabulary, activation='softmax'))(d4)
+
+lstm_model = Model(inputs=inp, outputs=output)
+
 
 
 # In[12]:
 
 
 optim = Adam()
-model.compile(loss='categorical_crossentropy', optimizer=optim, metrics=['categorical_accuracy'])
+lstm_model.compile(loss='categorical_crossentropy', optimizer=optim, metrics=['categorical_accuracy'])
 
 
 # In[13]:
 
 
-print(model.summary())
+print(lstm_model.summary())
 #checkpointer = ModelCheckpoint(filepath=data_path + '/model-{epoch:02d}.hdf5', verbose=1)
 earlystopping = EarlyStopping(monitor='val_loss', patience=5, verbose=1)
 reduce_lr = ReduceLROnPlateau(factor=0.1, patience=1, verbose=1)
-num_epochs = 40
+num_epochs = 50
 if run_opt == 1:
-    model.fit_generator(train_data_generator.generate(), len(train_data)//(batch_size*num_steps), num_epochs,
+    lstm_model.fit_generator(train_data_generator.generate(), len(train_data)//(batch_size*num_steps), num_epochs,
                         validation_data=valid_data_generator.generate(),
                         validation_steps=len(valid_data)//(batch_size*num_steps), callbacks=[earlystopping, reduce_lr])#, callbacks=[checkpointer])
     # model.fit_generator(train_data_generator.generate(), 2000, num_epochs,
@@ -227,4 +232,3 @@ elif run_opt == 2:
         pred_print_out += reversed_dictionary[predict_word] + " "
     print(true_print_out)
     print(pred_print_out)
-
