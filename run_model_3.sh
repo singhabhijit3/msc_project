@@ -1,12 +1,11 @@
 #!/bin/sh
-#SBATCH -p LongJobs
 #SBATCH -N 1	  # nodes requested
 #SBATCH -n 1	  # tasks requested
 #SBATCH --gres=gpu:1
 #SBATCH --mem=16000  # memory in Mb
-#SBATCH -o zaremba_very_large  # send stdout to zaremba_very_large
+#SBATCH -o zaremba_l3_2  # send stdout to zaremba_l3_2
 #SBATCH -e experiment_errfile_3  # send stderr to experiment_errfile_3
-#SBATCH -t 20:00:00  # time requested in hour:minute:secon
+#SBATCH -t 08:00:00  # time requested in hour:minute:secon
 export CUDA_HOME=/opt/cuda-8.0.44
 
 export CUDNN_HOME=/opt/cuDNN-6.0_8.0
@@ -31,4 +30,4 @@ export TMP=/disk/scratch/${STUDENT_ID}/
 
 source /home/${STUDENT_ID}/miniconda3/bin/activate mlp
 
-python sample_3.py
+python sample.py
