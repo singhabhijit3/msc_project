@@ -122,4 +122,6 @@ Learning rates: (for SGD. num_steps=35, bs=5, hs=650, do=0.5)
 
 zaremba_sgd_lr001: E50-6.099 (still kept decreasing), T=256 s
 zaremba_sgd_lr1: E36-4.662, T=252 s
+zaremba_sgd_lr10: Extremely bad results, so file was deleted. val loss > 13.
+zaremba_sgd_lr100: Extremely bad results, so file was deleted. val loss > 15.
 
