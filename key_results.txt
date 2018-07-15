@@ -104,6 +104,12 @@ zaremba_l3: E11-5.002
 zaremba_l4: E29-4.947
 zaremba_l5: E35-5.043
 
+Number of layers: (num_steps=35, bs=5, hs=650, do=0.5)
+
+zaremba_l3_2: E31-4.805, T=383 s
+zaremba_l4_2: E22-4.880, T=454 s
+zaremba_l5_2: E21-4.997, T=586 s
+
 Using best hyperparameters found till now: (context length=15, batch size=5, Default Adam with LRS)
 
 zaremba_best1: E28-4.789
@@ -111,4 +117,9 @@ zaremba_best2: E28-4.815
 zaremba_best3: E38-4.786
 
 zaremba_very_large: E40-4.729 (still kept decreasing with every epoch) (num_steps=35, bs=5, hs=1500, do=0.6)
+
+Learning rates: (for SGD. num_steps=35, bs=5, hs=650, do=0.5)
+
+zaremba_sgd_lr001: E50-6.099 (still kept decreasing), T=256 s
+zaremba_sgd_lr1: E36-4.662, T=252 s
 
