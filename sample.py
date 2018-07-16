@@ -162,10 +162,7 @@ if use_dropout:
 l2 = CuDNNLSTM(hidden_size, return_sequences=True)(d2)
 if use_dropout:
     d3 = Dropout(0.5)(l2)
-l3 = CuDNNLSTM(hidden_size, return_sequences=True)(d3)
-if use_dropout:
-    d4 = Dropout(0.5)(l3)
-output = TimeDistributed(Dense(vocabulary, activation='softmax'))(d4)
+output = TimeDistributed(Dense(vocabulary, activation='softmax'))(d3)
 
 lstm_model = Model(inputs=inp, outputs=output)
 
