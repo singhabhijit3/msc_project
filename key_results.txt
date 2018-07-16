@@ -124,6 +124,7 @@ zaremba_sgd_lr001: E50-6.099 (still kept decreasing), T=256 s
 zaremba_sgd_lr05: E36-4.718, T=258 s
 zaremba_sgd_lr1: E36-4.662, T=252 s
 zaremba_sgd_lr3: E41-4.583, T=248 s
+zaremba_sgd_lr5: E29-4.568, T=253 s
 zaremba_sgd_lr10: Extremely bad results, so file was deleted. val loss > 13.
 zaremba_sgd_lr100: Extremely bad results, so file was deleted. val loss > 15.
 
