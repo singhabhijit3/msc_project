@@ -171,7 +171,7 @@ lstm_model = Model(inputs=inp, outputs=output)
 # In[12]:
 
 
-optim = SGD(lr=3)
+optim = SGD(lr=10.0)
 lstm_model.compile(loss='categorical_crossentropy', optimizer=optim, metrics=['categorical_accuracy'])
 
 
