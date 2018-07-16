@@ -1,9 +1,10 @@
 #!/bin/sh
+#SBATCH -p Short
 #SBATCH -N 1	  # nodes requested
 #SBATCH -n 1	  # tasks requested
 #SBATCH --gres=gpu:1
 #SBATCH --mem=16000  # memory in Mb
-#SBATCH -o zaremba_lr3_3  # send stdout to zaremba_lr3_3
+#SBATCH -o zaremba_sgd_lr10  # send stdout to zaremba_sgd_lr10
 #SBATCH -e experiment_errfile_6  # send stderr to experiment_errfile_6
 #SBATCH -t 08:00:00  # time requested in hour:minute:secon
 export CUDA_HOME=/opt/cuda-8.0.44
