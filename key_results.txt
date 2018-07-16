@@ -121,7 +121,15 @@ zaremba_very_large: E40-4.729 (still kept decreasing with every epoch) (num_step
 Learning rates: (for SGD. num_steps=35, bs=5, hs=650, do=0.5)
 
 zaremba_sgd_lr001: E50-6.099 (still kept decreasing), T=256 s
+zaremba_sgd_lr05: E36-4.718, T=258 s
 zaremba_sgd_lr1: E36-4.662, T=252 s
+zaremba_sgd_lr3: E41-4.583, T=248 s
 zaremba_sgd_lr10: Extremely bad results, so file was deleted. val loss > 13.
 zaremba_sgd_lr100: Extremely bad results, so file was deleted. val loss > 15.
+
+Number of layers: (num_steps=35, bs=5, hs=650, do=0.5, with sgd instead of adam)
+
+zaremba_l3_sgd: E41-4.716, T=312 s
+zaremba_l4_sgd: E41-4.814, T=387 s
+zaremba_l5_sgd: E22-6.521, T=419 s
 
