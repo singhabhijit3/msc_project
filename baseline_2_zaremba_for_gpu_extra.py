@@ -162,16 +162,7 @@ if use_dropout:
 l2 = CuDNNLSTM(hidden_size, return_sequences=True)(d2)
 if use_dropout:
     d3 = Dropout(0.5)(l2)
-l3 = CuDNNLSTM(hidden_size, return_sequences=True)(d3)
-if use_dropout:
-    d4 = Dropout(0.5)(l3)
-l4 = CuDNNLSTM(hidden_size, return_sequences=True)(d4)
-if use_dropout:
-    d5 = Dropout(0.5)(l4)
-l5 = CuDNNLSTM(hidden_size, return_sequences=True)(d5)
-if use_dropout:
-    d6 = Dropout(0.5)(l5)
-output = TimeDistributed(Dense(vocabulary, activation='softmax'))(d6)
+output = TimeDistributed(Dense(vocabulary, activation='softmax'))(d3)
 
 lstm_model = Model(inputs=inp, outputs=output)
 
@@ -180,7 +171,7 @@ lstm_model = Model(inputs=inp, outputs=output)
 # In[12]:
 
 
-optim = SGD(lr=1.0)
+optim = SGD(lr=3)
 lstm_model.compile(loss='categorical_crossentropy', optimizer=optim, metrics=['categorical_accuracy'])
 
 
