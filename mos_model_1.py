@@ -164,11 +164,11 @@ l2 = CuDNNLSTM(hidden_size, return_sequences=True)(d2)
 if use_dropout:
     d3 = Dropout(0.5)(l2)
     
-latent = TimeDistributed(Dense(n_experts*hidden_size, input_shape=(hidden_size,), activation='tanh'))(d3)
+latent = TimeDistributed(Dense(n_experts*hidden_size, activation='tanh'))(d3)
 latent_reshape = Reshape((-1,hidden_size))(latent)
-logit = TimeDistributed(Dense(vocabulary,input_shape=(hidden_size,)))(latent_reshape)
+logit = TimeDistributed(Dense(vocabulary))(latent_reshape)
 
-prior_logit = TimeDistributed(Dense(n_experts, input_shape=(hidden_size,), use_bias=False))(d3)
+prior_logit = TimeDistributed(Dense(n_experts, use_bias=False))(d3)
 prior_logit = Reshape((-1,n_experts))(prior_logit)
 prior = TimeDistributed(Dense(n_experts, activation='softmax'))(prior_logit)
 
