@@ -1,4 +1,5 @@
 #!/bin/sh
+#SBATCH -p Short
 #SBATCH -N 1	  # nodes requested
 #SBATCH -n 1	  # tasks requested
 #SBATCH --gres=gpu:1
