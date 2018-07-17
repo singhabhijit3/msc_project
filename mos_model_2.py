@@ -176,7 +176,7 @@ prob = Reshape((-1,n_experts,vocabulary))(prob)
 prob = multiply([prob, prior])
 prob = Lambda(lambda x: K.sum(x, axis=2))(prob)
 
-prob = Lambda(lambda x: x+1e-8)(prob)
+#prob = Lambda(lambda x: x+1e-8)(prob)
 model_output = prob
 
 lstm_model = Model(inputs=inp, outputs=model_output)
