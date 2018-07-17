@@ -1,0 +1,3 @@
+First trial model: (Adam, num_steps=35, bs=20, n_experts=10, hs=650, do=0.5)
+
+mos_adam: E16-4.774, T=349 s
