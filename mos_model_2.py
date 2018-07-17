@@ -166,22 +166,17 @@ if use_dropout:
     
 latent = TimeDistributed(Dense(n_experts*hidden_size, activation='tanh'))(d3)
 latent_reshape = Reshape((-1,hidden_size))(latent)
-#logit = TimeDistributed(Dense(vocabulary))(latent_reshape)
 
-#prior_logit = TimeDistributed(Dense(n_experts, use_bias=False))(d3)
-#prior_logit = Reshape((-1,n_experts))(prior_logit)
 prior = TimeDistributed(Dense(n_experts, use_bias=False, activation='softmax'))(d3)
 
 prior = Reshape((-1,n_experts,1))(prior)
 
-#logit_reshape = Reshape((-1,vocabulary))(logit)
 prob = TimeDistributed(Dense(vocabulary, activation='softmax'))(latent_reshape)
 prob = Reshape((-1,n_experts,vocabulary))(prob)
 prob = multiply([prob, prior])
 prob = Lambda(lambda x: K.sum(x, axis=2))(prob)
 
 prob = Lambda(lambda x: x+1e-8)(prob)
-#log_prob = Lambda(lambda x: K.log(x))(prob)
 model_output = prob
 
 lstm_model = Model(inputs=inp, outputs=model_output)
@@ -192,7 +187,7 @@ lstm_model = Model(inputs=inp, outputs=model_output)
 # In[12]:
 
 
-optim = Adam()
+optim = SGD(lr=1.0)
 lstm_model.compile(loss='categorical_crossentropy', optimizer=optim, metrics=['categorical_accuracy'])
 
 
@@ -202,7 +197,7 @@ lstm_model.compile(loss='categorical_crossentropy', optimizer=optim, metrics=['c
 print(lstm_model.summary())
 #checkpointer = ModelCheckpoint(filepath=data_path + '/model-{epoch:02d}.hdf5', verbose=1)
 earlystopping = EarlyStopping(monitor='val_loss', patience=5, verbose=1)
-reduce_lr = ReduceLROnPlateau(factor=0.1, patience=3, verbose=1)
+reduce_lr = ReduceLROnPlateau(factor=0.1, patience=1, verbose=1)
 num_epochs = 50
 if run_opt == 1:
     lstm_model.fit_generator(train_data_generator.generate(), len(train_data)//(batch_size*num_steps), num_epochs,
