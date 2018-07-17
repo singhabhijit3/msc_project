@@ -125,7 +125,7 @@ zaremba_sgd_lr05: E36-4.718, T=258 s
 zaremba_sgd_lr1: E36-4.662, T=252 s
 zaremba_sgd_lr3: E41-4.583, T=248 s
 zaremba_sgd_lr5: E29-4.568, T=253 s
-zaremba_sgd_lr7: Extremely bad results, so file was deleted. val loss > 13.
+zaremba_sgd_lr7: Extremely bad results, so file was deleted. val loss > 13. (Unstable LR. One run gave val loss=4.605)
 zaremba_sgd_lr10: Extremely bad results, so file was deleted. val loss > 15.
 zaremba_sgd_lr100: Extremely bad results, so file was deleted. val loss > 15.
 
@@ -137,5 +137,8 @@ zaremba_l5_sgd: E22-6.521, T=419 s
 
 Hidden size: (SGD, num_steps=35, bs=5, do=0.5, lr=5)
 
-zaremba_lr5_hs1000: E32-4.614, T=362 s
+zaremba_lr5_hs500: E46-4.589, T=194 s
+zaremba_lr5_hs800: E35-4.553, T=274 s
+zaremba_lr5_hs900: E34-4.583, T=322 s
+zaremba_lr5_hs1000: E29-4.571, T=362 s
 
