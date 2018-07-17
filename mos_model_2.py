@@ -166,16 +166,16 @@ if use_dropout:
     
 latent = TimeDistributed(Dense(n_experts*hidden_size, activation='tanh'))(d3)
 latent_reshape = Reshape((-1,hidden_size))(latent)
-logit = TimeDistributed(Dense(vocabulary))(latent_reshape)
+#logit = TimeDistributed(Dense(vocabulary))(latent_reshape)
 
-prior_logit = TimeDistributed(Dense(n_experts, use_bias=False))(d3)
+#prior_logit = TimeDistributed(Dense(n_experts, use_bias=False))(d3)
 #prior_logit = Reshape((-1,n_experts))(prior_logit)
-prior = TimeDistributed(Dense(n_experts, activation='softmax'))(prior_logit)
+prior = TimeDistributed(Dense(n_experts, use_bias=False, activation='softmax'))(d3)
 
 prior = Reshape((-1,n_experts,1))(prior)
 
 #logit_reshape = Reshape((-1,vocabulary))(logit)
-prob = TimeDistributed(Dense(vocabulary, activation='softmax'))(logit)
+prob = TimeDistributed(Dense(vocabulary, activation='softmax'))(latent_reshape)
 prob = Reshape((-1,n_experts,vocabulary))(prob)
 prob = multiply([prob, prior])
 prob = Lambda(lambda x: K.sum(x, axis=2))(prob)
@@ -192,7 +192,7 @@ lstm_model = Model(inputs=inp, outputs=model_output)
 # In[12]:
 
 
-optim = SGD(lr=3)
+optim = Adam()
 lstm_model.compile(loss='categorical_crossentropy', optimizer=optim, metrics=['categorical_accuracy'])
 
 
