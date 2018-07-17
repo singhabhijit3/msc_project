@@ -164,25 +164,25 @@ l2 = CuDNNLSTM(hidden_size, return_sequences=True)(d2)
 if use_dropout:
     d3 = Dropout(0.5)(l2)
     
-latent = TimeDistributed(Dense(n_experts*hidden_size, input_shape=(hidden_size,), activation='tanh'))(d3)
+latent = TimeDistributed(Dense(n_experts*hidden_size, activation='tanh'))(d3)
 latent_reshape = Reshape((-1,hidden_size))(latent)
-logit = TimeDistributed(Dense(vocabulary,input_shape=(hidden_size,)))(latent_reshape)
+logit = TimeDistributed(Dense(vocabulary))(latent_reshape)
 
-prior_logit = TimeDistributed(Dense(n_experts, input_shape=(hidden_size,), use_bias=False))(d3)
-prior_logit = Reshape((-1,n_experts))(prior_logit)
+prior_logit = TimeDistributed(Dense(n_experts, use_bias=False))(d3)
+#prior_logit = Reshape((-1,n_experts))(prior_logit)
 prior = TimeDistributed(Dense(n_experts, activation='softmax'))(prior_logit)
 
 prior = Reshape((-1,n_experts,1))(prior)
 
-logit_reshape = Reshape((-1,vocabulary))(logit)
-prob = TimeDistributed(Dense(vocabulary, activation='softmax'))(logit_reshape)
+#logit_reshape = Reshape((-1,vocabulary))(logit)
+prob = TimeDistributed(Dense(vocabulary, activation='softmax'))(logit)
 prob = Reshape((-1,n_experts,vocabulary))(prob)
 prob = multiply([prob, prior])
 prob = Lambda(lambda x: K.sum(x, axis=2))(prob)
 
 prob = Lambda(lambda x: x+1e-8)(prob)
-log_prob = Lambda(lambda x: K.log(x))(prob)
-model_output = log_prob
+#log_prob = Lambda(lambda x: K.log(x))(prob)
+model_output = prob
 
 lstm_model = Model(inputs=inp, outputs=model_output)
 
@@ -192,7 +192,7 @@ lstm_model = Model(inputs=inp, outputs=model_output)
 # In[12]:
 
 
-optim = SGD(lr=1000.0)
+optim = SGD(lr=3)
 lstm_model.compile(loss='categorical_crossentropy', optimizer=optim, metrics=['categorical_accuracy'])
 
 
@@ -202,12 +202,12 @@ lstm_model.compile(loss='categorical_crossentropy', optimizer=optim, metrics=['c
 print(lstm_model.summary())
 #checkpointer = ModelCheckpoint(filepath=data_path + '/model-{epoch:02d}.hdf5', verbose=1)
 earlystopping = EarlyStopping(monitor='val_loss', patience=5, verbose=1)
-#reduce_lr = ReduceLROnPlateau(factor=0.1, patience=1, verbose=1)
+reduce_lr = ReduceLROnPlateau(factor=0.1, patience=3, verbose=1)
 num_epochs = 50
 if run_opt == 1:
     lstm_model.fit_generator(train_data_generator.generate(), len(train_data)//(batch_size*num_steps), num_epochs,
                         validation_data=valid_data_generator.generate(),
-                        validation_steps=len(valid_data)//(batch_size*num_steps), callbacks=[earlystopping])#, reduce_lr])#, callbacks=[checkpointer])
+                        validation_steps=len(valid_data)//(batch_size*num_steps), callbacks=[earlystopping, reduce_lr])#, callbacks=[checkpointer])
     # model.fit_generator(train_data_generator.generate(), 2000, num_epochs,
     #                     validation_data=valid_data_generator.generate(),
     #                     validation_steps=10)
