@@ -9,7 +9,7 @@ import os
 import tensorflow as tf
 from keras.models import Sequential, load_model, Model
 from keras.layers import Input, Dense, Activation, Embedding, Flatten, Dropout, TimeDistributed, Reshape, Lambda
-from keras.layers import CuDNNLSTM
+from keras.layers import CuDNNLSTM, multiply, add
 from keras.optimizers import RMSprop, Adam, SGD
 from keras import backend as K
 from keras.utils import to_categorical
@@ -139,7 +139,8 @@ class KerasBatchGenerator(object):
 
 
 num_steps = 35
-batch_size = 5
+batch_size = 20
+n_experts = 10
 train_data_generator = KerasBatchGenerator(train_data, num_steps, batch_size, vocabulary,
                                            skip_step=num_steps)
 valid_data_generator = KerasBatchGenerator(valid_data, num_steps, batch_size, vocabulary,
@@ -149,7 +150,7 @@ valid_data_generator = KerasBatchGenerator(valid_data, num_steps, batch_size, vo
 # In[11]:
 
 
-hidden_size = 1200
+hidden_size = 650
 use_dropout=True
 
 inp = Input(shape=(num_steps,), dtype='int32')
@@ -162,16 +163,31 @@ if use_dropout:
 l2 = CuDNNLSTM(hidden_size, return_sequences=True)(d2)
 if use_dropout:
     d3 = Dropout(0.5)(l2)
-output = TimeDistributed(Dense(vocabulary, activation='softmax'))(d3)
+    
+latent = TimeDistributed(Dense(n_experts*hidden_size, activation='tanh'))(d3)
+latent_reshape = Reshape((-1,hidden_size))(latent)
 
-lstm_model = Model(inputs=inp, outputs=output)
+prior = TimeDistributed(Dense(n_experts, use_bias=False, activation='softmax'))(d3)
+
+prior = Reshape((-1,n_experts,1))(prior)
+
+prob = TimeDistributed(Dense(vocabulary, activation='softmax'))(latent_reshape)
+prob = Reshape((-1,n_experts,vocabulary))(prob)
+prob = multiply([prob, prior])
+prob = Lambda(lambda x: K.sum(x, axis=2))(prob)
+
+#prob = Lambda(lambda x: x+1e-8)(prob)
+model_output = prob
+
+lstm_model = Model(inputs=inp, outputs=model_output)
+
 
 
 
 # In[12]:
 
 
-optim = SGD(lr=5.0)
+optim = SGD(lr=0.5)
 lstm_model.compile(loss='categorical_crossentropy', optimizer=optim, metrics=['categorical_accuracy'])
 
 
