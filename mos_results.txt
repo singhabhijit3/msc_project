@@ -1,3 +1,9 @@
 First trial model: (Adam, num_steps=35, bs=20, n_experts=10, hs=650, do=0.5)
 
 mos_adam: E16-4.774, T=349 s
+
+Batch size: (SGD, num_steps=35, n_experts=10, hs=650, do=0.5)
+
+mos_bs20: E47-4.759, T=330 s
+mos_bs20_2: E50-4.796, T=326 s (still kept decreasing)
+
