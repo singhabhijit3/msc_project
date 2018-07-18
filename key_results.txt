@@ -141,4 +141,10 @@ zaremba_lr5_hs500: E46-4.589, T=194 s
 zaremba_lr5_hs800: E35-4.553, T=274 s
 zaremba_lr5_hs900: E34-4.583, T=322 s
 zaremba_lr5_hs1000: E29-4.571, T=362 s
+zaremba_lr5_hs1100: Diverged, re-run exp.
+zaremba_lr5_hs1200: E29-4.577, T=470 s
+zaremba_lr5_hs1300: Diverged, re-run exp.
+zaremba_lr5_hs1400: Diverged, re-run exp.
+zaremba_lr5_hs1500: E34-4.566, T=640 s
+
 
