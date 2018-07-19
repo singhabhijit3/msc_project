@@ -1,108 +1,108 @@
 baseline_1_results: num_steps=20, batch_size=20, hidden_size=200, 1 LSTM, no dropout, ADAM, (E9-5.128)
 zaremba_results: num_steps=20, batch_size=20, hidden_size=200, 2 LSTM, no dropout, ADAM, (E8-5.159)
 
-baseline_1_results_2: num_steps=35, batch_size=20, hidden_size=650, 1 LSTM, no dropout, ADAM, (E6-4.983)
-zaremba_results_2: num_steps=35, batch_size=20, hidden_size=650, 2 LSTM, no dropout, ADAM, (E6-5.065)
+baseline_1_results_2: num_steps=35, batch_size=20, hidden_size=650, 1 LSTM, no dropout, ADAM, (E6-4.983), T=135 s
+zaremba_results_2: num_steps=35, batch_size=20, hidden_size=650, 2 LSTM, no dropout, ADAM, (E6-5.065), T=160 s
 
-zaremba_results_3: num_steps=35, batch_size=20, hidden_size=650, 2 LSTM, 3 dropout layers (0.5), ADAM, (E15-4.951)
+zaremba_results_3: num_steps=35, batch_size=20, hidden_size=650, 2 LSTM, 3 dropout layers (0.5), ADAM, (E15-4.951), T=162 s
 
 From here it uses early stopping:
 
 No. of dropout layers:
 
-zaremba_results_4: num_steps=35, batch_size=20, hidden_size=650, 2 LSTM, 3 dropout layers (0.5), ADAM, (E17-4.954)
+zaremba_results_4: num_steps=35, batch_size=20, hidden_size=650, 2 LSTM, 3 dropout layers (0.5), ADAM, (E17-4.954), T=164 s
 
-zaremba_results_5: num_steps=35, batch_size=20, hidden_size=650, 2 LSTM, 2 dropout layers (0.5), ADAM, (E11-4.899)
+zaremba_results_5: num_steps=35, batch_size=20, hidden_size=650, 2 LSTM, 2 dropout layers (0.5), ADAM, (E11-4.899), T=170 s
 
-zaremba_results_6: num_steps=35, batch_size=20, hidden_size=650, 2 LSTM, 1 dropout layer (0.5), ADAM, (E8-4.968)
+zaremba_results_6: num_steps=35, batch_size=20, hidden_size=650, 2 LSTM, 1 dropout layer (0.5), ADAM, (E8-4.968), T=180 s
 
 Learning Rates:
 
-baseline_1_lr_00001: Did not early stop for 20 epochs, best val loss 5.171
-baseline_1_lr_001: E3-5.317
+baseline_1_lr_00001: Did not early stop for 20 epochs, best val loss 5.171, T=140 s
+baseline_1_lr_001: E3-5.317, T=136 s
 baseline_1_lr_01: extremely bad
 baseline_1_lr_1: extremely bad
 baseline_1_lr_10: extremely bad
 baseline_1_lr_100: extremely bad
 
-zaremba_lr_00001: Did not early stop for 20 epochs, best val loss 5.276
-zaremba_lr_001: Did not early stop for 20 epochs, best val loss 5.362
+zaremba_lr_00001: Did not early stop for 20 epochs, best val loss 5.276, T=165 s
+zaremba_lr_001: Did not early stop for 20 epochs, best val loss 5.362, T=161 s
 zaremba_lr_01: extremely bad
 zaremba_lr_1: extremely bad
 zaremba_lr_10: extremely bad
 zaremba_lr_100: extremely bad
 
-baseline_1_results_3: num_steps=35, batch_size=20, hidden_size=650, 1 LSTM, no dropout, ADAM, (E5-4.933)
-zaremba_results_7: num_steps=35, batch_size=20, hidden_size=650, 2 LSTM, 2 dropout layers (0.5), ADAM, (E12-4.955)
+baseline_1_results_3: num_steps=35, batch_size=20, hidden_size=650, 1 LSTM, no dropout, ADAM, (E5-4.933), T=140 s
+zaremba_results_7: num_steps=35, batch_size=20, hidden_size=650, 2 LSTM, 2 dropout layers (0.5), ADAM, (E12-4.955), T=160 s
 
-baseline_1_results_4: num_steps=35, batch_size=20, hidden_size=650, 1 LSTM, no dropout, ADAM, (E5-4.934)
-zaremba_results_8: num_steps=35, batch_size=20, hidden_size=650, 2 LSTM, 2 dropout layers (0.5), ADAM, (E11-4.960)
+baseline_1_results_4: num_steps=35, batch_size=20, hidden_size=650, 1 LSTM, no dropout, ADAM, (E5-4.934), T=135 s
+zaremba_results_8: num_steps=35, batch_size=20, hidden_size=650, 2 LSTM, 2 dropout layers (0.5), ADAM, (E11-4.960), T=164 s
 
-baseline_1_results_5: num_steps=35, batch_size=20, hidden_size=650, 1 LSTM, no dropout, ADAM, (E5-4.930)
-zaremba_results_9: num_steps=35, batch_size=20, hidden_size=650, 2 LSTM, 2 dropout layers (0.5), ADAM, (E13-4.955)
+baseline_1_results_5: num_steps=35, batch_size=20, hidden_size=650, 1 LSTM, no dropout, ADAM, (E5-4.930), T=139 s
+zaremba_results_9: num_steps=35, batch_size=20, hidden_size=650, 2 LSTM, 2 dropout layers (0.5), ADAM, (E13-4.955), T=170 s
 
-baseline_1_results_6: num_steps=35, batch_size=20, hidden_size=650, 1 LSTM, no dropout, ADAM, (E5-4.968)
-zaremba_results_10: num_steps=35, batch_size=20, hidden_size=650, 2 LSTM, 2 dropout layers (0.5), ADAM, (E13-4.962)
+baseline_1_results_6: num_steps=35, batch_size=20, hidden_size=650, 1 LSTM, no dropout, ADAM, (E5-4.968), T=138 s
+zaremba_results_10: num_steps=35, batch_size=20, hidden_size=650, 2 LSTM, 2 dropout layers (0.5), ADAM, (E13-4.962), T=164 s
 
-baseline_1_results_7: num_steps=35, batch_size=20, hidden_size=650, 1 LSTM, no dropout, ADAM, (E5-4.978)
-zaremba_results_11: num_steps=35, batch_size=20, hidden_size=650, 2 LSTM, 2 dropout layers (0.5), ADAM, (E10-4.977)
+baseline_1_results_7: num_steps=35, batch_size=20, hidden_size=650, 1 LSTM, no dropout, ADAM, (E5-4.978), T=142 s
+zaremba_results_11: num_steps=35, batch_size=20, hidden_size=650, 2 LSTM, 2 dropout layers (0.5), ADAM, (E10-4.977), T=168 s
 
-baseline_1_results_8: num_steps=35, batch_size=20, hidden_size=650, 1 LSTM, no dropout, ADAM, (E4-4.961)
-zaremba_results_12: num_steps=35, batch_size=20, hidden_size=650, 2 LSTM, 2 dropout layers (0.5), ADAM, (E12-4.960)
+baseline_1_results_8: num_steps=35, batch_size=20, hidden_size=650, 1 LSTM, no dropout, ADAM, (E4-4.961), T=136 s
+zaremba_results_12: num_steps=35, batch_size=20, hidden_size=650, 2 LSTM, 2 dropout layers (0.5), ADAM, (E12-4.960), T=162 s
 
-baseline_1_results_9: num_steps=35, batch_size=20, hidden_size=650, 1 LSTM, no dropout, ADAM, (E5-4.950)
-zaremba_results_13: num_steps=35, batch_size=20, hidden_size=650, 2 LSTM, 2 dropout layers (0.5), ADAM, (E9-5.020)
+baseline_1_results_9: num_steps=35, batch_size=20, hidden_size=650, 1 LSTM, no dropout, ADAM, (E5-4.950), T=136 s
+zaremba_results_13: num_steps=35, batch_size=20, hidden_size=650, 2 LSTM, 2 dropout layers (0.5), ADAM, (E9-5.020), T=165 s
 
 Learning Rate Schedules:
 
-baseline_1_lrs_rms: E4-5.171
-baseline_1_lrs_adam: E5-4.926 (patience=3, factor=0.5)
-baseline_1_lrs_adam2: E5-4.962 (patience=2, factor=0.5)
-baseline_1_lrs_adam3: E5-4.943 (patience=2, factor=0.1)
-baseline_1_lrs_adam4: E5-4.937 (patience=1, factor=0.1)
-baseline_1_lrs_adam5: E9-5.289 (patience=1, factor=0.1, lr=0.01)
+baseline_1_lrs_rms: E4-5.171, T=135 s
+baseline_1_lrs_adam: E5-4.926 (patience=3, factor=0.5), T=139 s
+baseline_1_lrs_adam2: E5-4.962 (patience=2, factor=0.5), T=137 s
+baseline_1_lrs_adam3: E5-4.943 (patience=2, factor=0.1), T=135 s
+baseline_1_lrs_adam4: E5-4.937 (patience=1, factor=0.1), T=135 s
+baseline_1_lrs_adam5: E9-5.289 (patience=1, factor=0.1, lr=0.01), T=135 s
 
 Zaremba results now use 3 dropout layers of 0.5
 
-zaremba_lrs_rms: E11-5.133
-zaremba_lrs_adam: E18-4.951 (patience=3, factor=0.5)
-zaremba_lrs_adam2: E28-4.914 (patience=2, factor=0.5)
-zaremba_lrs_adam3: E30-4.860 (patience=2, factor=0.1)
-zaremba_lrs_adam4: E21-4.872 (patience=1, factor=0.1)
-zaremba_lrs_adam5: E21-5.264 (patience=1, factor=0.1, lr=0.01)
+zaremba_lrs_rms: E11-5.133, T=156 s
+zaremba_lrs_adam: E18-4.951 (patience=3, factor=0.5), T=166 s
+zaremba_lrs_adam2: E28-4.914 (patience=2, factor=0.5), T=161 s
+zaremba_lrs_adam3: E30-4.860 (patience=2, factor=0.1), T=162 s
+zaremba_lrs_adam4: E21-4.872 (patience=1, factor=0.1), T=163 s
+zaremba_lrs_adam5: E21-5.264 (patience=1, factor=0.1, lr=0.01), T=166 s
 
 Batch Size: (patience=1, factor=0.1, lr=0.001)
 
-baseline_1_bs05: E3-4.921
-baseline_1_bs10: E3-4.915
-baseline_1_bs50: E14-6.221
-baseline_1_bs100: E9-6.534
+baseline_1_bs05: E3-4.921, T=263 s
+baseline_1_bs10: E3-4.915, T=176 s
+baseline_1_bs50: E14-6.221, T=123 s
+baseline_1_bs100: E9-6.534, T=106 s
 
-zaremba_bs05: E40-4.728 (still kept decreasing with every epoch)
-zaremba_bs10: E27-4.818
-zaremba_bs50: E12-5.885
-zaremba_bs100: E12-5.819
+zaremba_bs05: E40-4.728 (still kept decreasing with every epoch), T=334 s
+zaremba_bs10: E27-4.818, T=230 s
+zaremba_bs50: E12-5.885, T=141 s
+zaremba_bs100: E12-5.819, T=125 s
 
-zaremba_alt_best: E28-4.757 (same specs as zaremba_bs05)
-zaremba_alt_best2: E34-4.742
+zaremba_alt_best: E28-4.757 (same specs as zaremba_bs05), T=336 s
+zaremba_alt_best2: E34-4.742, T=325 s
 
 Context Length: (Till now it was 35. Rest is same as above. Batch Size is kept at 20 for quicker training, though best seems to be 5 or 10)
 
-baseline_1_cl15: E3-4.955
-baseline_1_cl25: E16-4.948
-baseline_1_cl45: E4-6.539
-baseline_1_cl55: E10-6.439
+baseline_1_cl15: E3-4.955, T=186 s
+baseline_1_cl25: E16-4.948, T=151 s
+baseline_1_cl45: E4-6.539, T=157 s
+baseline_1_cl55: E10-6.439, T=144 s
 
-zaremba_cl15: E27-4.828
-zaremba_cl25: E32-4.873
-zaremba_cl45: E13-6.462
-zaremba_cl45: E13-6.528
+zaremba_cl15: E27-4.828, T=223 s
+zaremba_cl25: E32-4.873, T=184 s
+zaremba_cl45: E13-6.462, T=169 s
+zaremba_cl55: E13-6.528, T=166 s
 
 Number of layers: (Only for Zaremba. Till now we had 2 LSTM layers. Batch Size=20, Context Length=35, 0.5 Dropout between each layer)
 
-zaremba_l3: E11-5.002
-zaremba_l4: E29-4.947
-zaremba_l5: E35-5.043
+zaremba_l3: E11-5.002, T=190 s
+zaremba_l4: E29-4.947, T=220 s
+zaremba_l5: E35-5.043, T=247 s
 
 Number of layers: (num_steps=35, bs=5, hs=650, do=0.5)
 
@@ -112,11 +112,11 @@ zaremba_l5_2: E21-4.997, T=586 s
 
 Using best hyperparameters found till now: (context length=15, batch size=5, Default Adam with LRS)
 
-zaremba_best1: E28-4.789
-zaremba_best2: E28-4.815
-zaremba_best3: E38-4.786
+zaremba_best1: E28-4.789, T=554 s
+zaremba_best2: E28-4.815, T=551 s
+zaremba_best3: E38-4.786, T=552 s
 
-zaremba_very_large: E40-4.729 (still kept decreasing with every epoch) (num_steps=35, bs=5, hs=1500, do=0.6)
+zaremba_very_large: E40-4.729 (still kept decreasing with every epoch) (num_steps=35, bs=5, hs=1500, do=0.6), T=875 s
 
 Learning rates: (for SGD. num_steps=35, bs=5, hs=650, do=0.5)
 
