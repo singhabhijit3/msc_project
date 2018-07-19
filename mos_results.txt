@@ -9,6 +9,6 @@ mos_bs20_2: E50-4.796, T=326 s (still kept decreasing)
 
 Learning Rate: (SGD, num_steps=35, bs=20, n_experts=10, hs=650, do=0.5)
 
-mos_lr3: E37-4.989, T=329 s
+mos_lr3: E45-4.685, T=335 s
 mos_lr5: E38-6.564, T=348 s
 
