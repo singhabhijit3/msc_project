@@ -16,5 +16,5 @@ mos_lr1: E31-4.800, T=342 s
 mos_lr2: E42-4.692, T=338 s
 mos_lr3: E45-4.685, T=335 s
 mos_lr4: Diverged, re-run exp.
-mos_lr5: E38-6.564, T=348 s
+mos_lr5: E37-4.863, T=330 s
 
