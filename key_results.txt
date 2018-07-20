@@ -118,7 +118,7 @@ zaremba_best3: E38-4.786, T=552 s
 
 zaremba_very_large: E40-4.729 (still kept decreasing with every epoch) (num_steps=35, bs=5, hs=1500, do=0.6), T=875 s
 
-zaremba_sgd_bs20: Diverged, re-run exp. (num_steps=35, bs=20, hs=650, do=0.5, lr=5), T=875 s
+zaremba_sgd_bs20: E39-4.632 (num_steps=35, bs=20, hs=650, do=0.5, lr=5), T=141 s
 
 Learning rates: (for SGD. num_steps=35, bs=5, hs=650, do=0.5)
 
