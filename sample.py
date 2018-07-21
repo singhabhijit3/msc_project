@@ -140,7 +140,7 @@ class KerasBatchGenerator(object):
 
 num_steps = 35
 batch_size = 20
-n_experts = 10
+n_experts = 1
 train_data_generator = KerasBatchGenerator(train_data, num_steps, batch_size, vocabulary,
                                            skip_step=num_steps)
 valid_data_generator = KerasBatchGenerator(valid_data, num_steps, batch_size, vocabulary,
@@ -187,7 +187,7 @@ lstm_model = Model(inputs=inp, outputs=model_output)
 # In[12]:
 
 
-optim = SGD(lr=2)
+optim = SGD(lr=3)
 lstm_model.compile(loss='categorical_crossentropy', optimizer=optim, metrics=['categorical_accuracy'])
 
 
