@@ -4,6 +4,7 @@ mos_adam: E16-4.774, T=349 s
 
 Batch size: (SGD, num_steps=35, n_experts=10, hs=650, do=0.5, lr=1)
 
+mos_bs5: E32-4.720, T=435 s
 mos_bs10: E34-4.711, T=360 s
 mos_bs15: E34-4.774, T=355 s
 mos_bs20: E47-4.759, T=330 s
@@ -23,4 +24,5 @@ mos_lr5: E37-4.863, T=330 s (unstable)
 Number of experts: (SGD, num_steps=35, bs=20, hs=650, do=0.5, lr=1)
 
 mos-ne1_1: E36-4.821, T=144 s
+mos-ne3_2: E37-4.773, T=188 s
 
