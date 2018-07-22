@@ -139,7 +139,7 @@ class KerasBatchGenerator(object):
 
 
 num_steps = 35
-batch_size = 10
+batch_size = 5
 n_experts = 10
 train_data_generator = KerasBatchGenerator(train_data, num_steps, batch_size, vocabulary,
                                            skip_step=num_steps)
