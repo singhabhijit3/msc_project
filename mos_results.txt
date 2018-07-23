@@ -25,4 +25,5 @@ Number of experts: (SGD, num_steps=35, bs=20, hs=650, do=0.5, lr=1)
 
 mos-ne1_1: E36-4.821, T=144 s
 mos-ne3_2: E37-4.773, T=188 s
+mos-ne7_1: E40-4.792, T=262 s
 
