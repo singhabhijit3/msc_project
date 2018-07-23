@@ -150,7 +150,7 @@ valid_data_generator = KerasBatchGenerator(valid_data, num_steps, batch_size, vo
 # In[11]:
 
 
-hidden_size = 650
+hidden_size = 1000
 use_dropout=True
 
 inp = Input(shape=(num_steps,), dtype='int32')
@@ -187,7 +187,7 @@ lstm_model = Model(inputs=inp, outputs=model_output)
 # In[12]:
 
 
-optim = SGD(lr=4, clipnorm=1.)
+optim = SGD(lr=3, clipnorm=1.)
 lstm_model.compile(loss='categorical_crossentropy', optimizer=optim, metrics=['categorical_accuracy'])
 
 
