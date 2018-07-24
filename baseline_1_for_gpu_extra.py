@@ -12,7 +12,7 @@ from keras.layers import Input, Dense, Activation, Embedding, Flatten, Dropout, 
 from keras.layers import CuDNNLSTM, multiply, add
 from keras.optimizers import RMSprop, Adam, SGD
 from keras import backend as K
-from keras.utils import to_categorical
+from keras.utils import to_categorical, multi_gpu_model
 from keras.callbacks import ModelCheckpoint, EarlyStopping, ReduceLROnPlateau
 import numpy as np
 import argparse
@@ -181,26 +181,26 @@ model_output = prob
 
 lstm_model = Model(inputs=inp, outputs=model_output)
 
-
+parallel_model = multi_gpu_model(lstm_model, gpus=2)
 
 
 # In[12]:
 
 
 optim = SGD(lr=3)
-lstm_model.compile(loss='categorical_crossentropy', optimizer=optim, metrics=['categorical_accuracy'])
+parallel_model.compile(loss='categorical_crossentropy', optimizer=optim, metrics=['categorical_accuracy'])
 
 
 # In[13]:
 
 
-print(lstm_model.summary())
+print(parallel_model.summary())
 #checkpointer = ModelCheckpoint(filepath=data_path + '/model-{epoch:02d}.hdf5', verbose=1)
 earlystopping = EarlyStopping(monitor='val_loss', patience=5, verbose=1)
 reduce_lr = ReduceLROnPlateau(factor=0.1, patience=1, verbose=1)
 num_epochs = 50
 if run_opt == 1:
-    lstm_model.fit_generator(train_data_generator.generate(), len(train_data)//(batch_size*num_steps), num_epochs,
+    parallel_model.fit_generator(train_data_generator.generate(), len(train_data)//(batch_size*num_steps), num_epochs,
                         validation_data=valid_data_generator.generate(),
                         validation_steps=len(valid_data)//(batch_size*num_steps), callbacks=[earlystopping, reduce_lr])#, callbacks=[checkpointer])
     # model.fit_generator(train_data_generator.generate(), 2000, num_epochs,
