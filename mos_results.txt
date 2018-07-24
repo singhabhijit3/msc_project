@@ -28,5 +28,10 @@ Number of experts: (SGD, num_steps=35, bs=20, hs=650, do=0.5, lr=1)
 mos-ne1_1: E36-4.821, T=144 s
 mos-ne3_2: E37-4.773, T=188 s
 mos-ne7_1: E40-4.792, T=262 s
+mos-ne10_2: E44-4.904, T=338 s (with clipnorm of 1)
 mos-ne15_1: E43-4.779, T=456 s
+
+Hidden size: (SGD, num_steps=35, bs=20, n_experts=10, do=0.5, lr=3)
+
+mos_hs1000: E37-4.811, T=448 s (with clipnorm of 1)
 
