@@ -179,28 +179,29 @@ prob = Lambda(lambda x: K.sum(x, axis=2))(prob)
 #prob = Lambda(lambda x: x+1e-8)(prob)
 model_output = prob
 
-lstm_model = Model(inputs=inp, outputs=model_output)
-
-parallel_model = multi_gpu_model(lstm_model, gpus=2)
+with tf.device("/cpu:0"):
+    lstm_model = Model(inputs=inp, outputs=model_output)
+    
+lstm_model = multi_gpu_model(lstm_model, gpus=2)
 
 
 # In[12]:
 
 
 optim = SGD(lr=3)
-parallel_model.compile(loss='categorical_crossentropy', optimizer=optim, metrics=['categorical_accuracy'])
+lstm_model.compile(loss='categorical_crossentropy', optimizer=optim, metrics=['categorical_accuracy'])
 
 
 # In[13]:
 
 
-print(parallel_model.summary())
+print(lstm_model.summary())
 #checkpointer = ModelCheckpoint(filepath=data_path + '/model-{epoch:02d}.hdf5', verbose=1)
 earlystopping = EarlyStopping(monitor='val_loss', patience=5, verbose=1)
 reduce_lr = ReduceLROnPlateau(factor=0.1, patience=1, verbose=1)
 num_epochs = 50
 if run_opt == 1:
-    parallel_model.fit_generator(train_data_generator.generate(), len(train_data)//(batch_size*num_steps), num_epochs,
+    lstm_model.fit_generator(train_data_generator.generate(), len(train_data)//(batch_size*num_steps), num_epochs,
                         validation_data=valid_data_generator.generate(),
                         validation_steps=len(valid_data)//(batch_size*num_steps), callbacks=[earlystopping, reduce_lr])#, callbacks=[checkpointer])
     # model.fit_generator(train_data_generator.generate(), 2000, num_epochs,
