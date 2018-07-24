@@ -3,7 +3,7 @@
 #SBATCH -n 1	  # tasks requested
 #SBATCH --gres=gpu:1
 #SBATCH --mem=16000  # memory in Mb
-#SBATCH -o mos_bs20 # send stdout to mos_bs20
+#SBATCH -o mos_rd # send stdout to mos_rd
 #SBATCH -e experiment_errfile_1  # send stderr to experiment_errfile_1
 #SBATCH -t 08:00:00  # time requested in hour:minute:secon
 export CUDA_HOME=/opt/cuda-8.0.44
@@ -30,4 +30,4 @@ export TMP=/disk/scratch/${STUDENT_ID}/
 
 source /home/${STUDENT_ID}/miniconda3/bin/activate mlp
 
-python mos_model_1.py
+python cpu_lstm.py
