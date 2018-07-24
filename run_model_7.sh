@@ -1,7 +1,7 @@
 #!/bin/sh
-#SBATCH -N 2	  # nodes requested
+#SBATCH -N 1	  # nodes requested
 #SBATCH -n 1	  # tasks requested
-#SBATCH --gres=gpu:1
+#SBATCH --gres=gpu:2
 #SBATCH --mem=16000  # memory in Mb
 #SBATCH -o mos_mgpu_trial  # send stdout to mos_mgpu_trial
 #SBATCH -e experiment_errfile_7  # send stderr to experiment_errfile_7
