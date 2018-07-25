@@ -157,17 +157,17 @@ inp = Input(shape=(num_steps,), dtype='int32')
 embed = Embedding(vocabulary, hidden_size, input_length=num_steps)(inp)
 if use_dropout:
     d1 = Dropout(0.5)(embed)
-l1 = LSTM(hidden_size, return_sequences=True, recurrent_dropout=0.5)(d1)
+l1 = LSTM(hidden_size, return_sequences=True, recurrent_dropout=0.5)(embed)#(d1)
 if use_dropout:
     d2 = Dropout(0.5)(l1)
-l2 = LSTM(hidden_size, return_sequences=True, recurrent_dropout=0.5)(d2)
+l2 = LSTM(hidden_size, return_sequences=True, recurrent_dropout=0.5)(l1)#(d2)
 if use_dropout:
     d3 = Dropout(0.5)(l2)
     
-latent = TimeDistributed(Dense(n_experts*hidden_size, activation='tanh'))(d3)
+latent = TimeDistributed(Dense(n_experts*hidden_size, activation='tanh'))(l2)#(d3)
 latent_reshape = Reshape((-1,hidden_size))(latent)
 
-prior = TimeDistributed(Dense(n_experts, use_bias=False, activation='softmax'))(d3)
+prior = TimeDistributed(Dense(n_experts, use_bias=False, activation='softmax'))(l2)#(d3)
 
 prior = Reshape((-1,n_experts,1))(prior)
 
