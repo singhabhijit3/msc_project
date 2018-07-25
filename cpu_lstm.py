@@ -157,10 +157,10 @@ inp = Input(shape=(num_steps,), dtype='int32')
 embed = Embedding(vocabulary, hidden_size, input_length=num_steps)(inp)
 if use_dropout:
     d1 = Dropout(0.5)(embed)
-l1 = LSTM(hidden_size, return_sequences=True, recurrent_dropout=0.5)(embed)#(d1)
+l1 = LSTM(hidden_size, return_sequences=True, recurrent_dropout=0.3)(embed)#(d1)
 if use_dropout:
     d2 = Dropout(0.5)(l1)
-l2 = LSTM(hidden_size, return_sequences=True, recurrent_dropout=0.5)(l1)#(d2)
+l2 = LSTM(hidden_size, return_sequences=True, recurrent_dropout=0.3)(l1)#(d2)
 if use_dropout:
     d3 = Dropout(0.5)(l2)
     
@@ -187,7 +187,7 @@ lstm_model = Model(inputs=inp, outputs=model_output)
 # In[12]:
 
 
-optim = SGD(lr=1)
+optim = SGD(lr=3)
 lstm_model.compile(loss='categorical_crossentropy', optimizer=optim, metrics=['categorical_accuracy'])
 
 
