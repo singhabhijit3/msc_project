@@ -182,7 +182,7 @@ model_output = prob
 with tf.device("/cpu:0"):
     lstm_model = Model(inputs=inp, outputs=model_output)
     
-lstm_model = multi_gpu_model(lstm_model, gpus=4)
+lstm_model = multi_gpu_model(lstm_model, gpus=2)
 
 
 # In[12]:
