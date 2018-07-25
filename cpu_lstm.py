@@ -151,7 +151,7 @@ valid_data_generator = KerasBatchGenerator(valid_data, num_steps, batch_size, vo
 
 
 hidden_size = 650
-use_dropout=True
+use_dropout=False
 
 inp = Input(shape=(num_steps,), dtype='int32')
 embed = Embedding(vocabulary, hidden_size, input_length=num_steps)(inp)
