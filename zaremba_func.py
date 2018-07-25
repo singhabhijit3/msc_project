@@ -150,7 +150,7 @@ valid_data_generator = KerasBatchGenerator(valid_data, num_steps, batch_size, vo
 # In[11]:
 
 
-hidden_size = 1500
+hidden_size = 1250
 use_dropout=True
 
 inp = Input(shape=(num_steps,), dtype='int32')
