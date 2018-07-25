@@ -35,3 +35,11 @@ Hidden size: (SGD, num_steps=35, bs=20, n_experts=10, do=0.5, lr=3)
 
 mos_hs1000: E44-4.744, T=427 s
 
+Layers: (SGD, num_steps=35, bs=10, hs=650, n_experts=10, do=0.5, lr=1)
+
+mos_l3: E26-4.862, T=401 s
+
+No. of GPUs: (SGD, num_steps=35, bs=20, n_experts=10, hs=650, do=0.5, lr=1)
+
+mos_mgpu_trial: E44-4.781, T=300 s
+
