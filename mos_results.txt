@@ -31,10 +31,11 @@ mos-ne7_1: E40-4.792, T=262 s
 mos-ne10_3: E32-4.790, T=335 s
 mos-ne15_1: E43-4.779, T=456 s
 
-Hidden size: (SGD, num_steps=35, bs=20, n_experts=10, do=0.5, lr=3)
+Hidden size:
 
-mos_hs1000: E44-4.744, T=427 s
-mos_hs1500: E24-4.831, T=752 s
+mos_hs1000: E44-4.744, T=427 s (SGD, num_steps=35, bs=20, n_experts=10, do=0.5, lr=3)
+mos_hs1250: E42-4.863, T=633 s (SGD, num_steps=35, bs=20, n_experts=10, do=0.5, lr=1 with clipnorm)
+mos_hs1500: E24-4.831, T=752 s (SGD, num_steps=35, bs=20, n_experts=10, do=0.5, lr=1 with clipnorm)
 
 Layers: (SGD, num_steps=35, bs=10, hs=650, n_experts=10, do=0.5, lr=1)
 
@@ -43,9 +44,16 @@ mos_l3: E26-4.862, T=401 s
 No. of GPUs: (SGD, num_steps=35, bs=20, n_experts=10, hs=650, do=0.5, lr=1)
 
 mos_mgpu_trial: E44-4.781, T=300 s (2 GPUs)
+mos_mgpu_2: E31-4.806, T=296 s
 mos_mgpu_4: E44-4.785, T=397 s
+
+No. of GPUs: (SGD, num_steps=35, bs=16, n_experts=10, hs=650, do=0.5, lr=1)
+
+mos_bs16_3: E45-4.744, T=345 s (1 GPU)
 
 Using LSTM instead of CuDNNLSTM:
 
 mos_rd: E45-4.778, T=488 s (SGD, num_steps=35, bs=20, n_experts=10, hs=650, do=0.5, rd=0.5, lr=1)
+mos_rd2: diverged, re-run.  (SGD, num_steps=35, bs=20, n_experts=10, hs=650, do=0.5 (internal), rd=0.3, lr=3 with clipnorm)
+mos_rd3: E27-4.823, T=484 s (SGD, num_steps=35, bs=20, n_experts=10, hs=650, do=NA, rd=0.3, lr=3)
 
