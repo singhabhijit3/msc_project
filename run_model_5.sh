@@ -1,9 +1,9 @@
 #!/bin/sh
 #SBATCH -N 1	  # nodes requested
 #SBATCH -n 1	  # tasks requested
-#SBATCH --gres=gpu:1
+#SBATCH --gres=gpu:8
 #SBATCH --mem=16000  # memory in Mb
-#SBATCH -o mos_bs16_3  # send stdout to mos_bs16_3
+#SBATCH -o mos_bs16_gpu8  # send stdout to mos_bs16_gpu8
 #SBATCH -e experiment_errfile_5  # send stderr to experiment_errfile_5
 #SBATCH -t 08:00:00  # time requested in hour:minute:secon
 export CUDA_HOME=/opt/cuda-8.0.44
