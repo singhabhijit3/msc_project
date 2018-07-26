@@ -3,7 +3,7 @@
 #SBATCH -n 1	  # tasks requested
 #SBATCH --gres=gpu:1
 #SBATCH --mem=16000  # memory in Mb
-#SBATCH -o mos_rd3 # send stdout to mos_rd3
+#SBATCH -o time_1 # send stdout to time_1
 #SBATCH -e experiment_errfile_1  # send stderr to experiment_errfile_1
 #SBATCH -t 08:00:00  # time requested in hour:minute:secon
 export CUDA_HOME=/opt/cuda-8.0.44
@@ -30,4 +30,4 @@ export TMP=/disk/scratch/${STUDENT_ID}/
 
 source /home/${STUDENT_ID}/miniconda3/bin/activate mlp
 
-python cpu_lstm.py
+python baseline_2_zaremba_for_gpu.py
