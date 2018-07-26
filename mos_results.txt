@@ -52,6 +52,7 @@ No. of GPUs: (SGD, num_steps=35, bs=16, n_experts=10, hs=650, do=0.5, lr=1)
 mos_bs16_3: E45-4.744, T=345 s (1 GPU)
 mos_bs16_gpu2: E34-4.786, T=333 s
 mos_bs16_gpu4: E26-4.798, T=490 s
+mos_bs16_gpu8: E27-4.809, T=788 s
 
 Using LSTM instead of CuDNNLSTM:
 
