@@ -12,7 +12,7 @@ from keras.layers import Input, Dense, Activation, Embedding, Flatten, Dropout, 
 from keras.layers import CuDNNLSTM, multiply, add
 from keras.optimizers import RMSprop, Adam, SGD
 from keras import backend as K
-from keras.utils import to_categorical
+from keras.utils import to_categorical, multi_gpu_model
 from keras.callbacks import ModelCheckpoint, EarlyStopping, ReduceLROnPlateau
 import numpy as np
 import argparse
@@ -179,9 +179,10 @@ prob = Lambda(lambda x: K.sum(x, axis=2))(prob)
 #prob = Lambda(lambda x: x+1e-8)(prob)
 model_output = prob
 
-lstm_model = Model(inputs=inp, outputs=model_output)
-
-
+with tf.device("/cpu:0"):
+    lstm_model = Model(inputs=inp, outputs=model_output)
+    
+lstm_model = multi_gpu_model(lstm_model, gpus=8)
 
 
 # In[12]:
