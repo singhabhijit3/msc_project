@@ -17,10 +17,12 @@ from keras.callbacks import ModelCheckpoint, EarlyStopping, ReduceLROnPlateau
 import numpy as np
 import argparse
 import pdb
+import time
 
 
 # In[2]:
 
+t0 = time.time()
 
 data_path = "/home/s1788323/msc_project"
 
@@ -137,9 +139,11 @@ class KerasBatchGenerator(object):
 
 # In[10]:
 
+t1 = time.time()
+
 
 num_steps = 35
-batch_size = 20
+batch_size = 5
 train_data_generator = KerasBatchGenerator(train_data, num_steps, batch_size, vocabulary,
                                            skip_step=num_steps)
 valid_data_generator = KerasBatchGenerator(valid_data, num_steps, batch_size, vocabulary,
@@ -149,7 +153,7 @@ valid_data_generator = KerasBatchGenerator(valid_data, num_steps, batch_size, vo
 # In[11]:
 
 
-hidden_size = 650
+hidden_size = 800
 use_dropout=True
 
 inp = Input(shape=(num_steps,), dtype='int32')
@@ -171,7 +175,7 @@ lstm_model = Model(inputs=inp, outputs=output)
 # In[12]:
 
 
-optim = SGD(lr=1)
+optim = SGD(lr=5)
 lstm_model.compile(loss='categorical_crossentropy', optimizer=optim, metrics=['categorical_accuracy'])
 
 
@@ -229,3 +233,10 @@ elif run_opt == 2:
         pred_print_out += reversed_dictionary[predict_word] + " "
     print(true_print_out)
     print(pred_print_out)
+
+t2 = time.time()
+    
+total_1 = t1-t0
+total_2 = t2-t1
+print(total_1)
+print(total_2)
