@@ -50,10 +50,12 @@ mos_mgpu_4: E44-4.785, T=397 s
 No. of GPUs: (SGD, num_steps=35, bs=16, n_experts=10, hs=650, do=0.5, lr=1)
 
 mos_bs16_3: E45-4.744, T=345 s (1 GPU)
+mos_bs16_gpu2: E34-4.786, T=333 s
+mos_bs16_gpu4: E26-4.798, T=490 s
 
 Using LSTM instead of CuDNNLSTM:
 
 mos_rd: E45-4.778, T=488 s (SGD, num_steps=35, bs=20, n_experts=10, hs=650, do=0.5, rd=0.5, lr=1)
-mos_rd2: diverged, re-run.  (SGD, num_steps=35, bs=20, n_experts=10, hs=650, do=0.5 (internal), rd=0.3, lr=3 with clipnorm)
-mos_rd3: E27-4.823, T=484 s (SGD, num_steps=35, bs=20, n_experts=10, hs=650, do=NA, rd=0.3, lr=3)
+mos_rd2: E31-4.819, T=506 s  (SGD, num_steps=35, bs=20, n_experts=10, hs=650, do=0.5 (internal), rd=0.3, lr=3 with clipnorm)
+mos_rd3: E15-4.808, T=496 s (SGD, num_steps=35, bs=20, n_experts=10, hs=650, do=NA, rd=0.3, lr=3 with clipnorm)
 
