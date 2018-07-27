@@ -17,6 +17,7 @@ from keras.callbacks import ModelCheckpoint, EarlyStopping, ReduceLROnPlateau
 import numpy as np
 import argparse
 import pdb
+import time
 
 
 # In[2]:
@@ -137,9 +138,11 @@ class KerasBatchGenerator(object):
 
 # In[10]:
 
+t0 = time.time()
+
 
 num_steps = 35
-batch_size = 16
+batch_size = 20
 n_experts = 10
 train_data_generator = KerasBatchGenerator(train_data, num_steps, batch_size, vocabulary,
                                            skip_step=num_steps)
@@ -246,3 +249,8 @@ elif run_opt == 2:
         pred_print_out += reversed_dictionary[predict_word] + " "
     print(true_print_out)
     print(pred_print_out)
+    
+t1 = time.time()
+    
+total_1 = (t1-t0)/60
+print(total_1)
