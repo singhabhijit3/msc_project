@@ -25,6 +25,7 @@ import time
 t0 = time.time()
 
 data_path = "/home/s1788323/msc_project"
+save_path = "/home/s1788323/msc_project/msc_project_files/saved_models"
 
 
 # In[3]:
@@ -183,7 +184,7 @@ lstm_model.compile(loss='categorical_crossentropy', optimizer=optim, metrics=['c
 
 
 print(lstm_model.summary())
-#checkpointer = ModelCheckpoint(filepath=data_path + '/model-{epoch:02d}.hdf5', verbose=1)
+#checkpointer = ModelCheckpoint(filepath=save_path + '/model-{epoch:02d}.hdf5', verbose=1, save_best_only=True)
 earlystopping = EarlyStopping(monitor='val_loss', patience=5, verbose=1)
 reduce_lr = ReduceLROnPlateau(factor=0.1, patience=1, verbose=1)
 num_epochs = 50
