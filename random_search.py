@@ -45,8 +45,9 @@ run_opt = 1
 
 num_steps = random.sample(range(10, 50), 10)
 batch_size = random.sample(range(5, 50), 10)
+n_experts = random.sample(range(1, 15), 10)
 
-hidden_size = random.sample(range(5, 20), 10)
+hidden_size = random.sample(range(5, 15), 10)
 drop_prob = random.sample(range(20, 70), 10)
 
 hidden_size = [i * 100 for i in hidden_size]
@@ -123,6 +124,7 @@ for ijk in combos:
     print("model %d" % ijk)
     print("num_steps=%d" % num_steps[ijk-1])
     print("batch_size=%d" % batch_size[ijk-1])
+    print("n_experts=%d" % n_experts[ijk-1])
     print("hidden_size=%d" % hidden_size[ijk-1])
     print("drop_prob=%f" % drop_prob[ijk-1])
 
@@ -171,39 +173,58 @@ for ijk in combos:
 
 # In[11]:
 
+    ns = num_steps[ijk-1]
     hidden = hidden_size[ijk-1]
     drop = drop_prob[ijk-1]
+    n_exp = n_experts[ijk-1]
     
     use_dropout=True
-    model = Sequential()
-    model.add(Embedding(vocabulary, hidden_size[ijk-1], input_length=num_steps[ijk-1]))
+    inp = Input(shape=(ns,), dtype='int32')
+    embed = Embedding(vocabulary, hidden, input_length=ns)(inp)
     if use_dropout:
-        model.add(Dropout(drop))
-    model.add(CuDNNLSTM(hidden, return_sequences=True))
+        d1 = Dropout(drop)(embed)
+    l1 = CuDNNLSTM(hidden, return_sequences=True)(d1)
     if use_dropout:
-        model.add(Dropout(drop))
-    model.add(CuDNNLSTM(hidden, return_sequences=True))
+        d2 = Dropout(drop)(l1)
+    l2 = CuDNNLSTM(hidden, return_sequences=True)(d2)
     if use_dropout:
-        model.add(Dropout(drop))
-    model.add(TimeDistributed(Dense(vocabulary)))
-    model.add(Activation('softmax'))
+        d3 = Dropout(drop)(l2)
+    
+    latent = TimeDistributed(Dense(n_exp*hidden, activation='tanh'))(d3)
+    latent_reshape = Reshape((-1,hidden))(latent)
+
+    prior = TimeDistributed(Dense(n_exp, use_bias=False, activation='softmax'))(d3)
+
+    prior = Reshape((-1,n_exp,1))(prior)
+
+    prob = TimeDistributed(Dense(vocabulary, activation='softmax'))(latent_reshape)
+    prob = Reshape((-1,n_exp,vocabulary))(prob)
+    prob = multiply([prob, prior])
+    prob = Lambda(lambda x: K.sum(x, axis=2))(prob)
+
+    #prob = Lambda(lambda x: x+1e-8)(prob)
+    model_output = prob
+
+    lstm_model = Model(inputs=inp, outputs=model_output)
+
+
 
 
 # In[12]:
 
 
-    optim = Adam()
-    model.compile(loss='categorical_crossentropy', optimizer=optim, metrics=['categorical_accuracy'])
+    optim = SGD(lr=1, clipnorm=1.)
+    lstm_model.compile(loss='categorical_crossentropy', optimizer=optim, metrics=['categorical_accuracy'])
 
 
 # In[13]:
 
 
     #print(model.summary())
-#checkpointer = ModelCheckpoint(filepath=data_path + '/model-{epoch:02d}.hdf5', verbose=1)
-#earlystopping = EarlyStopping(monitor='val_loss', patience=10, verbose=1)
-#reduce_lr = ReduceLROnPlateau(factor=0.1, patience=1, verbose=1)
-    num_epochs = 3
+    #checkpointer = ModelCheckpoint(filepath=data_path + '/model-{epoch:02d}.hdf5', verbose=1)
+    #earlystopping = EarlyStopping(monitor='val_loss', patience=10, verbose=1)
+    #reduce_lr = ReduceLROnPlateau(factor=0.1, patience=1, verbose=1)
+    num_epochs = 5
     if run_opt == 1:
         model.fit_generator(train_data_generator.generate(), len(train_data)//(batch_size[ijk-1]*num_steps[ijk-1]), num_epochs,
                         validation_data=valid_data_generator.generate(),
