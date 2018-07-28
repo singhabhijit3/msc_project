@@ -138,9 +138,9 @@ class KerasBatchGenerator(object):
 # In[10]:
 
 
-num_steps = 35
-batch_size = 10
-n_experts = 10
+num_steps = 40
+batch_size = 5
+n_experts = 5
 train_data_generator = KerasBatchGenerator(train_data, num_steps, batch_size, vocabulary,
                                            skip_step=num_steps)
 valid_data_generator = KerasBatchGenerator(valid_data, num_steps, batch_size, vocabulary,
@@ -150,27 +150,24 @@ valid_data_generator = KerasBatchGenerator(valid_data, num_steps, batch_size, vo
 # In[11]:
 
 
-hidden_size = 650
+hidden_size = 1000
 use_dropout=True
 
 inp = Input(shape=(num_steps,), dtype='int32')
 embed = Embedding(vocabulary, hidden_size, input_length=num_steps)(inp)
 if use_dropout:
-    d1 = Dropout(0.5)(embed)
+    d1 = Dropout(0.65)(embed)
 l1 = CuDNNLSTM(hidden_size, return_sequences=True)(d1)
 if use_dropout:
-    d2 = Dropout(0.5)(l1)
+    d2 = Dropout(0.65)(l1)
 l2 = CuDNNLSTM(hidden_size, return_sequences=True)(d2)
 if use_dropout:
-    d3 = Dropout(0.5)(l2)
-l3 = CuDNNLSTM(hidden_size, return_sequences=True)(d3)
-if use_dropout:
-    d4 = Dropout(0.5)(l3)
+    d3 = Dropout(0.65)(l2)
     
-latent = TimeDistributed(Dense(n_experts*hidden_size, activation='tanh'))(d4)
+latent = TimeDistributed(Dense(n_experts*hidden_size, activation='tanh'))(d3)
 latent_reshape = Reshape((-1,hidden_size))(latent)
 
-prior = TimeDistributed(Dense(n_experts, use_bias=False, activation='softmax'))(d4)
+prior = TimeDistributed(Dense(n_experts, use_bias=False, activation='softmax'))(d3)
 
 prior = Reshape((-1,n_experts,1))(prior)
 
@@ -190,7 +187,7 @@ lstm_model = Model(inputs=inp, outputs=model_output)
 # In[12]:
 
 
-optim = SGD(lr=1)
+optim = SGD(lr=20, clipnorm=0.25)
 lstm_model.compile(loss='categorical_crossentropy', optimizer=optim, metrics=['categorical_accuracy'])
 
 
