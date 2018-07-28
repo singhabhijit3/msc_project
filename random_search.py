@@ -8,7 +8,7 @@ import collections
 import os
 import tensorflow as tf
 from keras.models import Sequential, load_model
-from keras.layers import Dense, Activation, Embedding, Flatten, Dropout, TimeDistributed, Reshape, Lambda
+from keras.layers import Input, Dense, Activation, Embedding, Flatten, Dropout, TimeDistributed, Reshape, Lambda
 from keras.layers import CuDNNLSTM
 from keras.optimizers import RMSprop, Adam, SGD
 from keras import backend as K
