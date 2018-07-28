@@ -7,9 +7,9 @@ from __future__ import print_function
 import collections
 import os
 import tensorflow as tf
-from keras.models import Sequential, load_model
+from keras.models import Sequential, load_model, Model
 from keras.layers import Input, Dense, Activation, Embedding, Flatten, Dropout, TimeDistributed, Reshape, Lambda
-from keras.layers import CuDNNLSTM
+from keras.layers import CuDNNLSTM, multiply, add
 from keras.optimizers import RMSprop, Adam, SGD
 from keras import backend as K
 from keras.utils import to_categorical
