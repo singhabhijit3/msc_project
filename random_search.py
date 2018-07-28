@@ -226,7 +226,7 @@ for ijk in combos:
     #reduce_lr = ReduceLROnPlateau(factor=0.1, patience=1, verbose=1)
     num_epochs = 5
     if run_opt == 1:
-        model.fit_generator(train_data_generator.generate(), len(train_data)//(batch_size[ijk-1]*num_steps[ijk-1]), num_epochs,
+        lstm_model.fit_generator(train_data_generator.generate(), len(train_data)//(batch_size[ijk-1]*num_steps[ijk-1]), num_epochs,
                         validation_data=valid_data_generator.generate(),
                         validation_steps=len(valid_data)//(batch_size[ijk-1]*num_steps[ijk-1]))#, callbacks=[earlystopping, reduce_lr])#, callbacks=[checkpointer])
     # model.fit_generator(train_data_generator.generate(), 2000, num_epochs,
