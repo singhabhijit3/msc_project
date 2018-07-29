@@ -191,7 +191,7 @@ lstm_model = multi_gpu_model(lstm_model, gpus=8)
 # In[12]:
 
 
-optim = SGD(lr=1, clipnorm=1.)
+optim = SGD(lr=1, clipnorm=0.25)
 lstm_model.compile(loss='categorical_crossentropy', optimizer=optim, metrics=['categorical_accuracy'])
 
 
