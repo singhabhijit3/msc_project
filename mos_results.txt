@@ -71,4 +71,6 @@ Random Models:
 try_1: E19-4.655, T=353 s (SGD, num_steps=35, bs=12, n_experts=5, hs=1000, do=0.4, lr=20 with clipnorm 0.25)
 try_2: E29-4.657, T=286 s (SGD, num_steps=28, bs=13, n_experts=6, hs=700, do=0.3, lr=20 with clipnorm 0.25)
 try_3: E21-4.717, T=493 s (SGD, num_steps=35, bs=12, n_experts=5, hs=1000, do=0.4, lr=20 with clipnorm 0.25)
+try_4: E29-4.652, T=434 s (SGD, num_steps=40, bs=6, n_experts=5, hs=900, do=0.25, lr=20 with clipnorm 0.25)
+try_5: 
 
