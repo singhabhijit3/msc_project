@@ -138,9 +138,9 @@ class KerasBatchGenerator(object):
 # In[10]:
 
 
-num_steps = 40
-batch_size = 6
-n_experts = 5
+num_steps = 20
+batch_size = 5
+n_experts = 4
 train_data_generator = KerasBatchGenerator(train_data, num_steps, batch_size, vocabulary,
                                            skip_step=num_steps)
 valid_data_generator = KerasBatchGenerator(valid_data, num_steps, batch_size, vocabulary,
@@ -150,19 +150,19 @@ valid_data_generator = KerasBatchGenerator(valid_data, num_steps, batch_size, vo
 # In[11]:
 
 
-hidden_size = 900
+hidden_size = 700
 use_dropout=True
 
 inp = Input(shape=(num_steps,), dtype='int32')
 embed = Embedding(vocabulary, hidden_size, input_length=num_steps)(inp)
 if use_dropout:
-    d1 = Dropout(0.25)(embed)
+    d1 = Dropout(0.37)(embed)
 l1 = CuDNNLSTM(hidden_size, return_sequences=True)(d1)
 if use_dropout:
-    d2 = Dropout(0.25)(l1)
+    d2 = Dropout(0.37)(l1)
 l2 = CuDNNLSTM(hidden_size, return_sequences=True)(d2)
 if use_dropout:
-    d3 = Dropout(0.25)(l2)
+    d3 = Dropout(0.37)(l2)
     
 latent = TimeDistributed(Dense(n_experts*hidden_size, activation='tanh'))(d3)
 latent_reshape = Reshape((-1,hidden_size))(latent)
