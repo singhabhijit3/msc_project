@@ -12,12 +12,11 @@ from keras.layers import Input, Dense, Activation, Embedding, Flatten, Dropout, 
 from keras.layers import CuDNNLSTM, multiply, add
 from keras.optimizers import RMSprop, Adam, SGD
 from keras import backend as K
-from keras.utils import to_categorical, multi_gpu_model
+from keras.utils import to_categorical
 from keras.callbacks import ModelCheckpoint, EarlyStopping, ReduceLROnPlateau
 import numpy as np
 import argparse
 import pdb
-import time
 
 
 # In[2]:
@@ -138,11 +137,9 @@ class KerasBatchGenerator(object):
 
 # In[10]:
 
-t0 = time.time()
 
-
-num_steps = 35
-batch_size = 20
+num_steps = 25
+batch_size = 5
 n_experts = 10
 train_data_generator = KerasBatchGenerator(train_data, num_steps, batch_size, vocabulary,
                                            skip_step=num_steps)
@@ -182,16 +179,15 @@ prob = Lambda(lambda x: K.sum(x, axis=2))(prob)
 #prob = Lambda(lambda x: x+1e-8)(prob)
 model_output = prob
 
-with tf.device("/cpu:0"):
-    lstm_model = Model(inputs=inp, outputs=model_output)
-    
-lstm_model = multi_gpu_model(lstm_model, gpus=4)
+lstm_model = Model(inputs=inp, outputs=model_output)
+
+
 
 
 # In[12]:
 
 
-optim = SGD(lr=1, clipnorm=1.)
+optim = SGD(lr=20, clipnorm=0.25)
 lstm_model.compile(loss='categorical_crossentropy', optimizer=optim, metrics=['categorical_accuracy'])
 
 
@@ -249,8 +245,3 @@ elif run_opt == 2:
         pred_print_out += reversed_dictionary[predict_word] + " "
     print(true_print_out)
     print(pred_print_out)
-    
-t1 = time.time()
-    
-total_1 = (t1-t0)/60
-print(total_1)
