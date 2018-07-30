@@ -9,7 +9,7 @@ import os
 import tensorflow as tf
 from keras.models import Sequential, load_model, Model
 from keras.layers import Input, Dense, Activation, Embedding, Flatten, Dropout, TimeDistributed, Reshape, Lambda
-from keras.layers import CuDNNLSTM
+from keras.layers import CuDNNLSTM, multiply, add
 from keras.optimizers import RMSprop, Adam, SGD
 from keras import backend as K
 from keras.utils import to_categorical
@@ -138,8 +138,9 @@ class KerasBatchGenerator(object):
 # In[10]:
 
 
-num_steps = 35
-batch_size = 5
+num_steps = 16
+batch_size = 17
+n_experts = 11
 train_data_generator = KerasBatchGenerator(train_data, num_steps, batch_size, vocabulary,
                                            skip_step=num_steps)
 valid_data_generator = KerasBatchGenerator(valid_data, num_steps, batch_size, vocabulary,
@@ -149,29 +150,44 @@ valid_data_generator = KerasBatchGenerator(valid_data, num_steps, batch_size, vo
 # In[11]:
 
 
-hidden_size = 1300
+hidden_size = 500
 use_dropout=True
 
 inp = Input(shape=(num_steps,), dtype='int32')
 embed = Embedding(vocabulary, hidden_size, input_length=num_steps)(inp)
 if use_dropout:
-    d1 = Dropout(0.5)(embed)
+    d1 = Dropout(0.21)(embed)
 l1 = CuDNNLSTM(hidden_size, return_sequences=True)(d1)
 if use_dropout:
-    d2 = Dropout(0.5)(l1)
+    d2 = Dropout(0.21)(l1)
 l2 = CuDNNLSTM(hidden_size, return_sequences=True)(d2)
 if use_dropout:
-    d3 = Dropout(0.5)(l2)
-output = TimeDistributed(Dense(vocabulary, activation='softmax'))(d3)
+    d3 = Dropout(0.21)(l2)
+    
+latent = TimeDistributed(Dense(n_experts*hidden_size, activation='tanh'))(d3)
+latent_reshape = Reshape((-1,hidden_size))(latent)
 
-lstm_model = Model(inputs=inp, outputs=output)
+prior = TimeDistributed(Dense(n_experts, use_bias=False, activation='softmax'))(d3)
+
+prior = Reshape((-1,n_experts,1))(prior)
+
+prob = TimeDistributed(Dense(vocabulary, activation='softmax'))(latent_reshape)
+prob = Reshape((-1,n_experts,vocabulary))(prob)
+prob = multiply([prob, prior])
+prob = Lambda(lambda x: K.sum(x, axis=2))(prob)
+
+#prob = Lambda(lambda x: x+1e-8)(prob)
+model_output = prob
+
+lstm_model = Model(inputs=inp, outputs=model_output)
+
 
 
 
 # In[12]:
 
 
-optim = SGD(lr=7)
+optim = SGD(lr=20, clipnorm=0.25)
 lstm_model.compile(loss='categorical_crossentropy', optimizer=optim, metrics=['categorical_accuracy'])
 
 
