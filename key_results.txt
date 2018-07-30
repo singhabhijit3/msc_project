@@ -152,4 +152,6 @@ zaremba_lr5_hs1500: E34-4.566, T=640 s
 
 time_1: same specs as zaremba_lr5_hs800. Pre-processing time: 0.8 seconds.
 
+zaremba_try_1:
+
 
