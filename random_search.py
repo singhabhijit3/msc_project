@@ -44,7 +44,7 @@ if args.data_path:
 run_opt = 1
 
 num_steps = random.sample(range(10, 50), 10)
-batch_size = random.sample(range(5, 50), 10)
+batch_size = random.sample(range(2, 20), 10)
 n_experts = random.sample(range(1, 15), 10)
 
 hidden_size = random.sample(range(5, 15), 10)
@@ -213,7 +213,7 @@ for ijk in combos:
 # In[12]:
 
 
-    optim = SGD(lr=1, clipnorm=1.)
+    optim = SGD(lr=20, clipnorm=0.25)
     lstm_model.compile(loss='categorical_crossentropy', optimizer=optim, metrics=['categorical_accuracy'])
 
 
