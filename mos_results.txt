@@ -60,6 +60,12 @@ mos_gpu2: E31-4.739, T=438 s
 mos_gpu4: E43-4.805, T=456 s
 mos_gpu8: 
 
+Context Length: (SGD, bs=5, n_experts=10, hs=650, do=0.5, lr=20 with clipnorm 0.25)
+
+mos_cl15: E29-4.826, T=625 s
+mos_cl20: E41-4.755, T=552 s
+mos_cl25: E23-4.750, T=501 s
+
 Using LSTM instead of CuDNNLSTM:
 
 mos_rd: E45-4.778, T=488 s (SGD, num_steps=35, bs=20, n_experts=10, hs=650, do=0.5, rd=0.5, lr=1)
@@ -72,5 +78,5 @@ try_1: E19-4.655, T=353 s (SGD, num_steps=35, bs=12, n_experts=5, hs=1000, do=0.
 try_2: E29-4.657, T=286 s (SGD, num_steps=28, bs=13, n_experts=6, hs=700, do=0.3, lr=20 with clipnorm 0.25)
 try_3: E21-4.717, T=493 s (SGD, num_steps=35, bs=12, n_experts=5, hs=1000, do=0.4, lr=20 with clipnorm 0.25)
 try_4: E29-4.652, T=434 s (SGD, num_steps=40, bs=6, n_experts=5, hs=900, do=0.25, lr=20 with clipnorm 0.25)
-try_5: 
+try_5: E41-4.725, T=458 s (SGD, num_steps=20, bs=5, n_experts=4, hs=700, do=0.37, lr=20 with clipnorm 0.25)
 
