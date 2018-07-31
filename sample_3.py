@@ -9,10 +9,10 @@ import os
 import tensorflow as tf
 from keras.models import Sequential, load_model, Model
 from keras.layers import Input, Dense, Activation, Embedding, Flatten, Dropout, TimeDistributed, Reshape, Lambda
-from keras.layers import CuDNNLSTM, multiply, add
+from keras.layers import CuDNNLSTM
 from keras.optimizers import RMSprop, Adam, SGD
 from keras import backend as K
-from keras.utils import to_categorical, multi_gpu_model
+from keras.utils import to_categorical
 from keras.callbacks import ModelCheckpoint, EarlyStopping, ReduceLROnPlateau
 import numpy as np
 import argparse
@@ -22,8 +22,10 @@ import time
 
 # In[2]:
 
+t0 = time.time()
 
 data_path = "/home/s1788323/msc_project"
+save_path = "/home/s1788323/msc_project/msc_project_files/saved_models"
 
 
 # In[3]:
@@ -138,12 +140,11 @@ class KerasBatchGenerator(object):
 
 # In[10]:
 
-t0 = time.time()
+t1 = time.time()
 
 
-num_steps = 35
-batch_size = 25
-n_experts = 10
+num_steps = 40
+batch_size = 20
 train_data_generator = KerasBatchGenerator(train_data, num_steps, batch_size, vocabulary,
                                            skip_step=num_steps)
 valid_data_generator = KerasBatchGenerator(valid_data, num_steps, batch_size, vocabulary,
@@ -166,32 +167,16 @@ if use_dropout:
 l2 = CuDNNLSTM(hidden_size, return_sequences=True)(d2)
 if use_dropout:
     d3 = Dropout(0.5)(l2)
-    
-latent = TimeDistributed(Dense(n_experts*hidden_size, activation='tanh'))(d3)
-latent_reshape = Reshape((-1,hidden_size))(latent)
+output = TimeDistributed(Dense(vocabulary, activation='softmax'))(d3)
 
-prior = TimeDistributed(Dense(n_experts, use_bias=False, activation='softmax'))(d3)
+lstm_model = Model(inputs=inp, outputs=output)
 
-prior = Reshape((-1,n_experts,1))(prior)
-
-prob = TimeDistributed(Dense(vocabulary, activation='softmax'))(latent_reshape)
-prob = Reshape((-1,n_experts,vocabulary))(prob)
-prob = multiply([prob, prior])
-prob = Lambda(lambda x: K.sum(x, axis=2))(prob)
-
-#prob = Lambda(lambda x: x+1e-8)(prob)
-model_output = prob
-
-with tf.device("/cpu:0"):
-    lstm_model = Model(inputs=inp, outputs=model_output)
-    
-lstm_model = multi_gpu_model(lstm_model, gpus=5)
 
 
 # In[12]:
 
 
-optim = SGD(lr=20, clipnorm=0.25)
+optim = Adam()#SGD(lr=5, clipnorm=0.25)
 lstm_model.compile(loss='categorical_crossentropy', optimizer=optim, metrics=['categorical_accuracy'])
 
 
@@ -199,7 +184,7 @@ lstm_model.compile(loss='categorical_crossentropy', optimizer=optim, metrics=['c
 
 
 print(lstm_model.summary())
-#checkpointer = ModelCheckpoint(filepath=data_path + '/model-{epoch:02d}.hdf5', verbose=1)
+#checkpointer = ModelCheckpoint(filepath=save_path + '/model-{epoch:02d}.hdf5', verbose=1, save_best_only=True)
 earlystopping = EarlyStopping(monitor='val_loss', patience=5, verbose=1)
 reduce_lr = ReduceLROnPlateau(factor=0.1, patience=1, verbose=1)
 num_epochs = 50
@@ -249,8 +234,10 @@ elif run_opt == 2:
         pred_print_out += reversed_dictionary[predict_word] + " "
     print(true_print_out)
     print(pred_print_out)
+
+t2 = time.time()
     
-t1 = time.time()
-    
-total_1 = (t1-t0)/60
+total_1 = t1-t0
+total_2 = (t2-t1)/60
 print(total_1)
+print(total_2)
