@@ -1,7 +1,7 @@
 #!/bin/sh
 #SBATCH -N 1	  # nodes requested
 #SBATCH -n 1	  # tasks requested
-#SBATCH --gres=gpu:5
+#SBATCH --gres=gpu:1
 #SBATCH --mem=16000  # memory in Mb
 #SBATCH -o zaremba_try_2  # send stdout to zaremba_try_2
 #SBATCH -e experiment_errfile_5  # send stderr to experiment_errfile_5
