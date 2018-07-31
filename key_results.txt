@@ -93,7 +93,7 @@ baseline_1_cl25: E16-4.948, T=151 s
 baseline_1_cl45: E4-6.539, T=157 s
 baseline_1_cl55: E10-6.439, T=144 s
 
-zaremba_cl15: E27-4.828, T=223 s
+zaremba_cl15: E26-4.883, T=215 s
 zaremba_cl25: E32-4.873, T=184 s
 zaremba_cl45: E13-6.462, T=169 s
 zaremba_cl55: E13-6.528, T=166 s
