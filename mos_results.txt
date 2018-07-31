@@ -58,7 +58,8 @@ No. of GPUs: (SGD, num_steps=35, bs=5 for each gpu, n_experts=10, hs=650, do=0.5
 
 mos_gpu2: E31-4.739, T=438 s
 mos_gpu3: E25-4.610, T=452 s
-mos_gpu4: E43-4.805, T=456 s 
+mos_gpu4: E43-4.805, T=456 s
+mos_gpu5: E08-4.904, T=450 s
 
 Context Length: (SGD, bs=5, n_experts=10, hs=650, do=0.5, lr=20 with clipnorm 0.25)
 
@@ -71,6 +72,9 @@ mos_cl40: E26-4.614, T=438 s
 mos_cl45: E25-4.608, T=434 s
 mos_cl50: E39-4.581, T=412 s
 mos_cl55: E47-4.561, T=421 s
+mos_cl60: E24-4.596, T=406 s
+mos_cl65: E17-4.746, T=401 s
+mos_cl70: E20-4.587, T=393 s
 
 Using LSTM instead of CuDNNLSTM:
 
