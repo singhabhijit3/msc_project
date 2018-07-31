@@ -143,7 +143,7 @@ class KerasBatchGenerator(object):
 t1 = time.time()
 
 
-num_steps = 45
+num_steps = 10
 batch_size = 20
 train_data_generator = KerasBatchGenerator(train_data, num_steps, batch_size, vocabulary,
                                            skip_step=num_steps)
@@ -238,6 +238,6 @@ elif run_opt == 2:
 t2 = time.time()
     
 total_1 = t1-t0
-total_2 = t2-t1/60
+total_2 = (t2-t1)/60
 print(total_1)
 print(total_2)
