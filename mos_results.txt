@@ -94,4 +94,5 @@ try_5: E41-4.725, T=458 s (SGD, num_steps=20, bs=5, n_experts=4, hs=700, do=0.37
 try_6: E39-4.635, T=458 s (SGD, num_steps=23, bs=14, n_experts=14, hs=700, do=0.42, lr=20 with clipnorm 0.25)
 try_7: E21-4.597, T=560 s (SGD, num_steps=55, bs=10, n_experts=15, hs=800, do=0.4, lr=20 with clipnorm 0.25)
 try_8: E26-4.570, T=330 s (SGD, num_steps=75, bs=10, n_experts=7, hs=800, do=0.4, lr=20 with clipnorm 0.25)
+try_9: E35-4.524, T=302 s (SGD, num_steps=70, bs=5, n_experts=5, hs=700, do=0.4, lr=20 with clipnorm 0.25)
 
