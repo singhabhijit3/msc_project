@@ -142,7 +142,7 @@ t0 = time.time()
 
 
 num_steps = 35
-batch_size = 25
+batch_size = 10
 n_experts = 10
 train_data_generator = KerasBatchGenerator(train_data, num_steps, batch_size, vocabulary,
                                            skip_step=num_steps)
@@ -185,7 +185,7 @@ model_output = prob
 with tf.device("/cpu:0"):
     lstm_model = Model(inputs=inp, outputs=model_output)
     
-lstm_model = multi_gpu_model(lstm_model, gpus=5)
+lstm_model = multi_gpu_model(lstm_model, gpus=2)
 
 
 # In[12]:
@@ -206,7 +206,7 @@ num_epochs = 50
 if run_opt == 1:
     lstm_model.fit_generator(train_data_generator.generate(), len(train_data)//(batch_size*num_steps), num_epochs,
                         validation_data=valid_data_generator.generate(),
-                        validation_steps=len(valid_data)//(batch_size*num_steps), callbacks=[earlystopping, reduce_lr])#, callbacks=[checkpointer])
+                        validation_steps=len(valid_data)//(batch_size*num_steps), callbacks=[earlystopping, reduce_lr], workers=2, use_multiprocessing=True)#, callbacks=[checkpointer])
     # model.fit_generator(train_data_generator.generate(), 2000, num_epochs,
     #                     validation_data=valid_data_generator.generate(),
     #                     validation_steps=10)
