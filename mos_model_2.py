@@ -156,13 +156,13 @@ use_dropout=True
 inp = Input(shape=(num_steps,), dtype='int32')
 embed = Embedding(vocabulary, hidden_size, input_length=num_steps)(inp)
 if use_dropout:
-    d1 = Dropout(0.6)(embed)
+    d1 = Dropout(0.4)(embed)
 l1 = CuDNNLSTM(hidden_size, return_sequences=True)(d1)
 if use_dropout:
-    d2 = Dropout(0.6)(l1)
+    d2 = Dropout(0.4)(l1)
 l2 = CuDNNLSTM(hidden_size, return_sequences=True)(d2)
 if use_dropout:
-    d3 = Dropout(0.6)(l2)
+    d3 = Dropout(0.4)(l2)
     
 latent = TimeDistributed(Dense(n_experts*hidden_size, activation='tanh'))(d3)
 latent_reshape = Reshape((-1,hidden_size))(latent)
