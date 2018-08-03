@@ -3,7 +3,7 @@
 #SBATCH -n 1	  # tasks requested
 #SBATCH --gres=gpu:2
 #SBATCH --mem=16000  # memory in Mb
-#SBATCH -o mos_mgpu_2  # send stdout to mos_mgpu_2
+#SBATCH -o mos_mgpu_trial_2  # send stdout to mos_mgpu_trial_2
 #SBATCH -e experiment_errfile_7  # send stderr to experiment_errfile_7
 #SBATCH -t 08:00:00  # time requested in hour:minute:secon
 export CUDA_HOME=/opt/cuda-8.0.44
