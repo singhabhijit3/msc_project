@@ -103,11 +103,14 @@ def load_data():
 
 train_data, valid_data, test_data, vocabulary, reversed_dictionary = load_data()
 
+x1=open("ptb_train.txt", "r")
+x2=open("ptb_val.txt", "r")
+
 
 # In[9]:
 
 
-class KerasBatchGenerator(object):
+"""class KerasBatchGenerator(object):
 
     def __init__(self, data, num_steps, batch_size, vocabulary, skip_step=5):
         self.data = data
@@ -135,7 +138,7 @@ class KerasBatchGenerator(object):
                 # convert all of temp_y into a one hot representation
                 y[i, :, :] = to_categorical(temp_y, num_classes=self.vocabulary)
                 self.current_idx += self.skip_step
-            yield x, y
+            yield x, y"""
 
 
 # In[10]:
@@ -143,8 +146,8 @@ class KerasBatchGenerator(object):
 t1 = time.time()
 
 
-num_steps = 10
-batch_size = 20
+num_steps = 35
+batch_size = 5
 train_data_generator = KerasBatchGenerator(train_data, num_steps, batch_size, vocabulary,
                                            skip_step=num_steps)
 valid_data_generator = KerasBatchGenerator(valid_data, num_steps, batch_size, vocabulary,
@@ -176,7 +179,7 @@ lstm_model = Model(inputs=inp, outputs=output)
 # In[12]:
 
 
-optim = Adam()#SGD(lr=5, clipnorm=0.25)
+optim = SGD(lr=5)
 lstm_model.compile(loss='categorical_crossentropy', optimizer=optim, metrics=['categorical_accuracy'])
 
 
