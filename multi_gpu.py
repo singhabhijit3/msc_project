@@ -206,7 +206,7 @@ num_epochs = 50
 if run_opt == 1:
     lstm_model.fit_generator(train_data_generator.generate(), len(train_data)//(batch_size*num_steps), num_epochs,
                         validation_data=valid_data_generator.generate(),
-                        validation_steps=len(valid_data)//(batch_size*num_steps), callbacks=[earlystopping, reduce_lr], max_queue_size=50, workers=2, use_multiprocessing=True)#, callbacks=[checkpointer])
+                        validation_steps=len(valid_data)//(batch_size*num_steps), callbacks=[earlystopping, reduce_lr], max_queue_size=100, workers=10, use_multiprocessing=True)#, callbacks=[checkpointer])
     # model.fit_generator(train_data_generator.generate(), 2000, num_epochs,
     #                     validation_data=valid_data_generator.generate(),
     #                     validation_steps=10)
