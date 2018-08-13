@@ -214,7 +214,7 @@ if run_opt == 1:
     #                     validation_steps=10)
     #model.save(data_path + "final_model.hdf5")
 t2 = time.time()
-elif run_opt == 2:
+if run_opt == 2:
     model = load_model(save_path + "\model-25.hdf5")
     #model = load_model(data_path + "final_model.hdf5")
     dummy_iters = 40
