@@ -22,8 +22,6 @@ import time
 
 # In[2]:
 
-t0 = time.time()
-
 
 data_path = "/home/s1788323/msc_project"
 save_path = "/home/s1788323/msc_project/msc_project_files/saved_models"
@@ -141,8 +139,6 @@ class KerasBatchGenerator(object):
 
 # In[10]:
 
-t1 = time.time()
-
 
 num_steps = 70
 batch_size = 5
@@ -213,13 +209,16 @@ if run_opt == 1:
     #                     validation_data=valid_data_generator.generate(),
     #                     validation_steps=10)
     #model.save(data_path + "final_model.hdf5")
-t2 = time.time()
+
 if run_opt == 2:
+    t0 = time.time()
     model = load_model(save_path + "/model-25.hdf5")
     #model = load_model(data_path + "final_model.hdf5")
+    t1 = time.time()
     dummy_iters = 40
     example_training_generator = KerasBatchGenerator(train_data, num_steps, 1, vocabulary,
                                                      skip_step=1)
+    t2 = time.time()
     print("Training data:")
     for i in range(dummy_iters):
         dummy = next(example_training_generator.generate())
@@ -228,8 +227,10 @@ if run_opt == 2:
     pred_print_out = "Predicted words: "
     for i in range(num_predict):
         data = next(example_training_generator.generate())
+        t3 = time.time()
         prediction = model.predict(data[0])
         predict_word = np.argmax(prediction[:, num_steps-1, :])
+        t4 = time.time()
         true_print_out += reversed_dictionary[train_data[num_steps + dummy_iters + i]] + " "
         pred_print_out += reversed_dictionary[predict_word] + " "
     print(true_print_out)
@@ -244,18 +245,29 @@ if run_opt == 2:
     num_predict = 10
     true_print_out = "Actual words: "
     pred_print_out = "Predicted words: "
+    tx0 = time.time()
     for i in range(num_predict):
         data = next(example_test_generator.generate())
+        t5 = time.time()
         prediction = model.predict(data[0])
         predict_word = np.argmax(prediction[:, num_steps - 1, :])
+        t6 = time.time()
         true_print_out += reversed_dictionary[test_data[num_steps + dummy_iters + i]] + " "
         pred_print_out += reversed_dictionary[predict_word] + " "
+    tx1 = time.time()
     print(true_print_out)
     print(pred_print_out)
     
-t3 = time.time()
+#t7 = time.time()
     
 total_1 = t1-t0
-total_2 = t3-t2
+total_2 = t2-t1
+total_3 = t4-t3
+total_4 = t6-t5
+total_5 = tx1-tx0
 #print(total_1)
+print(total_1)
 print(total_2)
+print(total_3)
+print(total_4)
+print(total_5)
