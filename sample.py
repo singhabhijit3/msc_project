@@ -43,7 +43,7 @@ if args.data_path:
 # In[4]:
 
 
-run_opt = 1
+run_opt = 2
 
 
 # In[5]:
@@ -213,9 +213,10 @@ if run_opt == 1:
     #                     validation_data=valid_data_generator.generate(),
     #                     validation_steps=10)
     #model.save(data_path + "final_model.hdf5")
+t2 = time.time()
 elif run_opt == 2:
-    #model = load_model(data_path + "\model-40.hdf5")
-    model = load_model(data_path + "final_model.hdf5")
+    model = load_model(save_path + "\model-25.hdf5")
+    #model = load_model(data_path + "final_model.hdf5")
     dummy_iters = 40
     example_training_generator = KerasBatchGenerator(train_data, num_steps, 1, vocabulary,
                                                      skip_step=1)
@@ -252,9 +253,9 @@ elif run_opt == 2:
     print(true_print_out)
     print(pred_print_out)
     
-t2 = time.time()
+t3 = time.time()
     
 total_1 = t1-t0
-total_2 = (t2-t1)/60
-print(total_1)
+total_2 = t3-t2
+#print(total_1)
 print(total_2)
