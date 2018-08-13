@@ -17,12 +17,16 @@ from keras.callbacks import ModelCheckpoint, EarlyStopping, ReduceLROnPlateau
 import numpy as np
 import argparse
 import pdb
+import time
 
 
 # In[2]:
 
+t0 = time.time()
+
 
 data_path = "/home/s1788323/msc_project"
+save_path = "/home/s1788323/msc_project/msc_project_files/saved_models"
 
 
 # In[3]:
@@ -137,10 +141,12 @@ class KerasBatchGenerator(object):
 
 # In[10]:
 
+t1 = time.time()
 
-num_steps = 80
+
+num_steps = 70
 batch_size = 5
-n_experts = 10
+n_experts = 3
 train_data_generator = KerasBatchGenerator(train_data, num_steps, batch_size, vocabulary,
                                            skip_step=num_steps)
 valid_data_generator = KerasBatchGenerator(valid_data, num_steps, batch_size, vocabulary,
@@ -150,19 +156,19 @@ valid_data_generator = KerasBatchGenerator(valid_data, num_steps, batch_size, vo
 # In[11]:
 
 
-hidden_size = 650
+hidden_size = 700
 use_dropout=True
 
 inp = Input(shape=(num_steps,), dtype='int32')
 embed = Embedding(vocabulary, hidden_size, input_length=num_steps)(inp)
 if use_dropout:
-    d1 = Dropout(0.5)(embed)
+    d1 = Dropout(0.4)(embed)
 l1 = CuDNNLSTM(hidden_size, return_sequences=True)(d1)
 if use_dropout:
-    d2 = Dropout(0.5)(l1)
+    d2 = Dropout(0.4)(l1)
 l2 = CuDNNLSTM(hidden_size, return_sequences=True)(d2)
 if use_dropout:
-    d3 = Dropout(0.5)(l2)
+    d3 = Dropout(0.4)(l2)
     
 latent = TimeDistributed(Dense(n_experts*hidden_size, activation='tanh'))(d3)
 latent_reshape = Reshape((-1,hidden_size))(latent)
@@ -195,14 +201,14 @@ lstm_model.compile(loss='categorical_crossentropy', optimizer=optim, metrics=['c
 
 
 print(lstm_model.summary())
-#checkpointer = ModelCheckpoint(filepath=data_path + '/model-{epoch:02d}.hdf5', verbose=1)
+checkpointer = ModelCheckpoint(filepath=save_path + '/model-{epoch:02d}.hdf5', verbose=1, save_best_only=True)
 earlystopping = EarlyStopping(monitor='val_loss', patience=5, verbose=1)
 reduce_lr = ReduceLROnPlateau(factor=0.1, patience=1, verbose=1)
 num_epochs = 50
 if run_opt == 1:
     lstm_model.fit_generator(train_data_generator.generate(), len(train_data)//(batch_size*num_steps), num_epochs,
                         validation_data=valid_data_generator.generate(),
-                        validation_steps=len(valid_data)//(batch_size*num_steps), callbacks=[earlystopping, reduce_lr])#, callbacks=[checkpointer])
+                        validation_steps=len(valid_data)//(batch_size*num_steps), callbacks=[checkpointer, earlystopping, reduce_lr])#, callbacks=[checkpointer])
     # model.fit_generator(train_data_generator.generate(), 2000, num_epochs,
     #                     validation_data=valid_data_generator.generate(),
     #                     validation_steps=10)
@@ -245,3 +251,10 @@ elif run_opt == 2:
         pred_print_out += reversed_dictionary[predict_word] + " "
     print(true_print_out)
     print(pred_print_out)
+    
+t2 = time.time()
+    
+total_1 = t1-t0
+total_2 = (t2-t1)/60
+print(total_1)
+print(total_2)
