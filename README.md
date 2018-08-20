@@ -11,3 +11,5 @@ The .sh files are bash scripts to run the .py files on the University of Edinbur
 The PTB data is stored in the "data" folder. Some of the results (which were close to the average values obtained) are available in "exp_results" folder. I did not save all results because it would have taken too much storage space.
 
 Please note that the hyper-parameter combinations in the .py files are just some of the last experiments I ran, and NOT the best performing configurations.
+
+The best hyper-parameter configuration for the MoS model was: num_steps = 70 (context length), batch_size = 5, n_experts = 4, hidden_size = 700, dropout = 0.4, Optimizer = SGD with lr = 20 and clipnorm = 0.25.
